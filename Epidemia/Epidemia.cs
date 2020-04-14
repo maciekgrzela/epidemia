@@ -31,11 +31,12 @@ namespace Epidemia
             hospital.orderTests(Epidemia.testsSupply);
             hospital.orderVaccines(Epidemia.vaccinesSupply);
 
-            diseaseProgress = new Thread(new ThreadStart(new DiseaseProgress().disease));
+            Virus virus = Virus.Instance;
+            virus.initialize(population / 10, true, population / 10000);
+
+            diseaseProgress = new Thread(new ThreadStart(new DiseaseProgress(Epidemia.vaccinesSupply, Epidemia.testsSupply).disease));
             diseaseProgress.Start();
 
-
-            //this.populationList = createPopulation();
             for (int i = 0; i < population; i++)
             {
                 var thread = new Thread(new ThreadStart(new Human(Guid.NewGuid(), false, HealthCondition.HEALTHY).live));

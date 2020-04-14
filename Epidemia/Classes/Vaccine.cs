@@ -11,5 +11,10 @@ namespace Epidemia.Classes
         public Guid identifier { get; set; }
         public bool isEffective { get; set; }
         public int protectionTime { get; set; }
+
+        public Vaccine(bool isEffective)
+        {
+            this.isEffective = isEffective;
+        }
     }
 }

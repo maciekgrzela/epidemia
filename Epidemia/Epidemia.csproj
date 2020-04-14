@@ -51,6 +51,7 @@
     <Compile Include="Classes\HealthCondition.cs" />
     <Compile Include="Classes\Hospital.cs" />
     <Compile Include="Classes\Human.cs" />
+    <Compile Include="Classes\StaticRandom.cs" />
     <Compile Include="Classes\Test.cs" />
     <Compile Include="Classes\Vaccine.cs" />
     <Compile Include="Classes\Virus.cs" />

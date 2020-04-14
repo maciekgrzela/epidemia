@@ -11,5 +11,10 @@ namespace Epidemia.Classes
     {
         public Guid identifier { get; set; }
         public bool isPositive { get; set; }
+
+        public Test(bool isPositive)
+        {
+            this.isPositive = isPositive;
+        }
     }
 }

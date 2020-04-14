@@ -14,19 +14,31 @@ namespace Epidemia.Classes
             this.identifier = identifier;
             this.hasVirus = hasVirus;
             this.healthCondition = healthCondition;
+            this.tested = false;
+            this.inoculated = false;
         }
         public Guid identifier { get; set; }
         public bool hasVirus { get; set; }
         public HealthCondition healthCondition { get; set; }
         public bool tested { get; set; }
+        public bool inoculated { get; set; }
+
+        private Mutex allowToFindBed = new Mutex();
+        private Mutex allowToMakeTest = new Mutex();
+        private Mutex allowToInoculate = new Mutex();
+
+        private static readonly object randomLock = new object();
+
 
         public void makeTest(ref List<Test> tests) 
         {
-            Random rand = new Random();
             if(tests.Count > 0)
             {
-                tests[0].isPositive = rand.Next(0, 1) < 0.3f ? true : false;
-                if (tests[0].isPositive)
+                double positive = StaticRandom.Rand();
+                Console.WriteLine("Wartość positive: {0}", positive);
+
+                tests[0].isPositive = positive < 0.3f ? true : false;
+                if (tests[0].isPositive == true)
                 {
                     this.hasVirus = true;
                     this.healthCondition = HealthCondition.INFECTED;
@@ -44,58 +56,45 @@ namespace Epidemia.Classes
                 {
                     this.hasVirus = false;
                     this.tested = false;
+                    this.inoculated = true;
                     this.healthCondition = HealthCondition.HEALTHY;
                 }
                 vaccines.RemoveAt(0);
             }
         }
-        private Mutex allowToFindBed = new Mutex();
-        private Mutex allowToMakeTest = new Mutex();
-        private Mutex allowToInoculate = new Mutex();
+        
 
         public void live()
         {
             bool isAlive = true;
-            int lifeWithoutVaccine = 5;
-            Random rnd = new Random();
             while (isAlive)
             {
                 switch (this.healthCondition)
                 {
                     case HealthCondition.HEALTHY:
-                        Console.WriteLine("Pacjent {0} jest zdrowy", this.identifier);
                         Hospital hospital1 = Hospital.Instance;
-                        if (lifeWithoutVaccine == 0)
+                        if (this.tested == true)
                         {
-                            if(this.tested == true)
+                            if (this.inoculated == false)
                             {
                                 if (allowToInoculate.WaitOne())
                                 {
                                     List<Vaccine> vaccines1 = hospital1.Vaccines;
-                                    if(vaccines1.Count > 0)
+                                    if (vaccines1.Count > 0)
                                     {
                                         this.inoculate(ref vaccines1);
-                                        Thread.Sleep(100);
                                         hospital1.Vaccines = vaccines1;
+                                        Console.WriteLine("Pacjent {0} się zaszczepił", this.identifier);
                                     }
                                     allowToInoculate.ReleaseMutex();
                                 }
-
-                            }else
-                            {
-                                if (allowToMakeTest.WaitOne())
-                                {
-                                    List<Test> tests1 = hospital1.Tests;
-                                    if (tests1.Count > 0)
-                                    {
-                                        this.makeTest(ref tests1);
-                                        Thread.Sleep(100);
-                                        hospital1.Tests = tests1;
-                                    }
-                                    allowToMakeTest.ReleaseMutex();
-                                }
                             }
-                        }else
+                            else
+                            {
+                                Console.WriteLine("Pacjent {0} jest zaszczepiony", this.identifier);
+                            }
+                        }
+                        else
                         {
                             if (allowToMakeTest.WaitOne())
                             {
@@ -103,7 +102,7 @@ namespace Epidemia.Classes
                                 if (tests1.Count > 0)
                                 {
                                     this.makeTest(ref tests1);
-                                    Thread.Sleep(100);
+                                    Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, this.hasVirus);
                                     hospital1.Tests = tests1;
                                 }
                                 allowToMakeTest.ReleaseMutex();
@@ -133,7 +132,7 @@ namespace Epidemia.Classes
                                     if (bed.mutex.WaitOne())
                                     {
                                         Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bed.identifier);
-                                        Thread.Sleep(rnd.Next(800, 1600));
+                                        Thread.Sleep(1000);
                                         this.healthCondition = HealthCondition.HEALTHY;
                                         this.hasVirus = false;
                                         bed.mutex.ReleaseMutex();
@@ -162,7 +161,7 @@ namespace Epidemia.Classes
                                     if (bed.mutex.WaitOne())
                                     {
                                         Console.WriteLine("Pacjent {0} zajmuje łóżko z respiratorem {1}", this.identifier, bed.identifier);
-                                        Thread.Sleep(rnd.Next(800, 1600));
+                                        Thread.Sleep(1000);
                                         this.healthCondition = HealthCondition.HEALTHY;
                                         this.hasVirus = false;
                                         bed.mutex.ReleaseMutex();
@@ -180,10 +179,6 @@ namespace Epidemia.Classes
                         break;
                 }
                 Thread.Sleep(2000);
-                if(lifeWithoutVaccine > 0)
-                {
-                    lifeWithoutVaccine--;
-                }
             }
         }
     }

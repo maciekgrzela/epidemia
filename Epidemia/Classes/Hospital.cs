@@ -96,7 +96,7 @@ namespace Epidemia.Classes
         {
             for (int i = 0; i < amount; i++)
             {
-                this.vaccines.Add(new Vaccine());
+                this.vaccines.Add(new Vaccine(true));
             }
             
         }
@@ -104,7 +104,7 @@ namespace Epidemia.Classes
         {
             for(int i = 0; i < amount; i++)
             {
-                this.tests.Add(new Test());
+                this.tests.Add(new Test(false));
             }
         }
         public void orderBeds(int amount, int withRespirator) 
