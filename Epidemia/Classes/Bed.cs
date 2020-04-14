@@ -15,6 +15,7 @@ namespace Epidemia.Classes
             this.identifier = identifier;
             this.hasRespirator = hasRespirator;
             this.isOccupied = isOccupied;
+            this.mutex = new Mutex();
         }
 
         public Guid identifier { get; set; }

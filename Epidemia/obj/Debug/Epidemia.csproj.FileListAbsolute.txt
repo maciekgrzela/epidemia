@@ -7,3 +7,12 @@ C:\Users\Maciek\source\repos\Epidemia\Epidemia\obj\Debug\Epidemia.Properties.Res
 C:\Users\Maciek\source\repos\Epidemia\Epidemia\obj\Debug\Epidemia.csproj.GenerateResource.cache
 C:\Users\Maciek\source\repos\Epidemia\Epidemia\obj\Debug\Epidemia.exe
 C:\Users\Maciek\source\repos\Epidemia\Epidemia\obj\Debug\Epidemia.pdb
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\bin\Debug\Epidemia.exe.config
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\bin\Debug\Epidemia.exe
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\bin\Debug\Epidemia.pdb
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.csprojAssemblyReference.cache
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.Properties.Resources.resources
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.csproj.GenerateResource.cache
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.exe
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.pdb
+C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.Window.resources

@@ -1,6 +1,6 @@
 ﻿namespace Epidemia
 {
-    partial class Epidemia
+    partial class Window
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.respiratoramounttb = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.vaccinessupplytb = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,8 +54,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.respiratoramounttb = new System.Windows.Forms.TextBox();
+            this.diseaseProgress = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -83,6 +84,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(209, 583);
             this.panel1.TabIndex = 0;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label10.Location = new System.Drawing.Point(12, 269);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(101, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Liczba respiratorów:";
+            // 
+            // respiratoramounttb
+            // 
+            this.respiratoramounttb.Location = new System.Drawing.Point(15, 290);
+            this.respiratoramounttb.Name = "respiratoramounttb";
+            this.respiratoramounttb.Size = new System.Drawing.Size(181, 20);
+            this.respiratoramounttb.TabIndex = 11;
             // 
             // label5
             // 
@@ -121,11 +139,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("MV Boli", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Berlin Sans FB", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(10, 50);
+            this.label3.Location = new System.Drawing.Point(21, 56);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(184, 25);
+            this.label3.Size = new System.Drawing.Size(166, 21);
             this.label3.TabIndex = 6;
             this.label3.Text = "Symulator Epidemii";
             // 
@@ -300,22 +318,8 @@
             this.label9.TabIndex = 3;
             this.label9.Text = "Przychodnia - szczepienia";
             // 
-            // label10
+            // diseaseProgress
             // 
-            this.label10.AutoSize = true;
-            this.label10.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label10.Location = new System.Drawing.Point(12, 269);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(101, 13);
-            this.label10.TabIndex = 12;
-            this.label10.Text = "Liczba respiratorów:";
-            // 
-            // respiratoramounttb
-            // 
-            this.respiratoramounttb.Location = new System.Drawing.Point(15, 290);
-            this.respiratoramounttb.Name = "respiratoramounttb";
-            this.respiratoramounttb.Size = new System.Drawing.Size(181, 20);
-            this.respiratoramounttb.TabIndex = 11;
             // 
             // Epidemia
             // 
@@ -375,6 +379,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox respiratoramounttb;
+        private System.ComponentModel.BackgroundWorker diseaseProgress;
     }
 }
 

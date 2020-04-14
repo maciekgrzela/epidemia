@@ -16,7 +16,7 @@ namespace Epidemia
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Epidemia());
+            Application.Run(new Window());
         }
     }
 }

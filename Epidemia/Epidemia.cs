@@ -1,108 +1,51 @@
 ﻿using Epidemia.Classes;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Epidemia
 {
-    public partial class Epidemia : Form
+    class Epidemia
     {
+        public static int population { get; set; }
+        public static int bedsAmount { get; set; }
+        public static int respiratorsAmount { get; set; }
+        public static int testsSupply { get; set; }
+        public static int vaccinesSupply { get; set; }
+        public static bool canVirusMutate { get; set; }
 
-        private int population { get; set; }
-        private int bedsAmount { get; set; }
-        private int respiratorsAmount { get; set; }
-        private int testsSupply { get; set; }
-        private int vaccinesSupply { get; set; }
-        private bool canVirusMutate { get; set; }
+        public Thread diseaseProgress;
+        public List<Thread> populationThreads = new List<Thread>();
 
         public Epidemia()
         {
-            InitializeComponent();
         }
 
-        private void startSimulationBtn_Click(object sender, EventArgs e)
+        public void Start()
         {
-            try
-            {
-                this.population = Convert.ToInt32(populationtb.Text);
-                this.bedsAmount = Convert.ToInt32(bedsamounttb.Text);
-                this.respiratorsAmount = Convert.ToInt32(respiratoramounttb.Text);
-                this.testsSupply = Convert.ToInt32(bedsamounttb.Text);
-                this.vaccinesSupply = Convert.ToInt32(vaccinessupplytb.Text);
-                this.canVirusMutate = canVirusMutatechb.Checked;
-            }catch(Exception exception)
-            {
-                MessageBox.Show("Jedna z wartości wprowadzonych do pól tekstowych jest niepoprawna", "Niepoprawne wartości", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
             Hospital hospital = Hospital.Instance;
-            hospital.orderBeds(this.bedsAmount, this.respiratorsAmount);
-            hospital.orderTests(this.testsSupply);
-            hospital.orderVaccines(this.vaccinesSupply);
+            hospital.orderBeds(Epidemia.bedsAmount, Epidemia.respiratorsAmount);
+            hospital.orderTests(Epidemia.testsSupply);
+            hospital.orderVaccines(Epidemia.vaccinesSupply);
 
-            DiseaseProgress progress = new DiseaseProgress();
-            var diseaseProgressThread = new Thread(new ThreadStart(progress.disease));
-            diseaseProgressThread.Start();
+            diseaseProgress = new Thread(new ThreadStart(new DiseaseProgress().disease));
+            diseaseProgress.Start();
 
-            var population = createPopulation();
-            var peopleThreads = new List<Thread>();
-            foreach (var human in population)
+
+            //this.populationList = createPopulation();
+            for (int i = 0; i < population; i++)
             {
-                var humanThread = new Thread(new ThreadStart(human.live));
-                peopleThreads.Add(humanThread);
-                humanThread.Start();
+                var thread = new Thread(new ThreadStart(new Human(Guid.NewGuid(), false, HealthCondition.HEALTHY).live));
+                populationThreads.Add(thread);
             }
 
-            foreach (var thread in peopleThreads)
+            foreach (var thread in populationThreads)
             {
-                thread.Join();
+                thread.Start();
             }
-
-            diseaseProgressThread.Join();
-
-            if(this.population == 0)
-            {
-                MessageBox.Show("Cała populacja została zabita przez wirusa :(", "Smutno nam", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
-        private List<Human> createPopulation()
-        {
-            var population = new List<Human>(this.population);
-            Random rnd = new Random();
-            var initiallyIll = rnd.Next((this.population / 2) + (this.population / 4), this.population);
-            for(int i = 0; i < this.population; i++)
-            {
-                if(i < initiallyIll)
-                {
-                    population.Add(new Human(Guid.NewGuid(), true, HealthCondition.INFECTED));
-                }else
-                {
-                    population.Add(new Human(Guid.NewGuid(), false, HealthCondition.HEALTHY));
-                }
-            }
-            return population;
-        }
-    }
-
-    public class DiseaseProgress
-    {
-        private static readonly object accessLock = new object();
-        public void disease()
-        {
-            // infekuje osobników w populacji
-            // pogarsza stan zdrowia osobników
-            // uśmierca określonego osobnika
-            // dostarcza szczepionki
-            // dostarcza testy
-            // usypia na określony czas
         }
     }
 }

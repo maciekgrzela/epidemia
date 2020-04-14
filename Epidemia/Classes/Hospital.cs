@@ -10,9 +10,9 @@ namespace Epidemia.Classes
     {
         private static volatile Hospital instance = null;
         private static readonly object accessLock = new object();
-        private List<Vaccine> vaccines;
-        private List<Bed> beds;
-        private List<Test> tests;
+        private List<Vaccine> vaccines = new List<Vaccine>();
+        private List<Bed> beds = new List<Bed>();
+        private List<Test> tests = new List<Test>();
 
         public static Hospital Instance
         {
@@ -100,16 +100,22 @@ namespace Epidemia.Classes
             }
             
         }
-        public void orderTests(int amount) { }
+        public void orderTests(int amount) 
+        {
+            for(int i = 0; i < amount; i++)
+            {
+                this.tests.Add(new Test());
+            }
+        }
         public void orderBeds(int amount, int withRespirator) 
         {
             for (int i = 0; i < amount - withRespirator; i++)
             {
-                this.beds.Add(new Bed(Guid.NewGuid(), false, false));
+                this.Beds.Add(new Bed(Guid.NewGuid(), false, false));
             }
             for(int i = 0; i < withRespirator; i++)
             {
-                this.beds.Add(new Bed(Guid.NewGuid(), true, false));
+                this.Beds.Add(new Bed(Guid.NewGuid(), true, false));
             }
         }
         public void take(Human human) { }
