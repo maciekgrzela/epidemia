@@ -16,5 +16,10 @@ namespace Epidemia.Classes
         {
             return random.Value.NextDouble();
         }
+
+        public static int Rand(int min, int max)
+        {
+            return random.Value.Next(min, max);
+        }
     }
 }

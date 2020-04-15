@@ -11,18 +11,22 @@ namespace Epidemia.Classes
     {
         private readonly int vaccinesSuply;
         private readonly int testsSupply;
+        private List<Human> people;
 
-        public DiseaseProgress(int vaccinesSuply, int testsSupply)
+        public DiseaseProgress(int vaccinesSuply, int testsSupply, List<Human> people)
         {
             this.vaccinesSuply = vaccinesSuply;
             this.testsSupply = testsSupply;
+            this.people = people;
         }
 
         public void disease()
         {
             while (true)
             {
+                int infectOtherCount = 0;
                 Hospital hospital = Hospital.Instance;
+                Virus virus = Virus.Instance;
                 Console.WriteLine("Empidemia sie rozwija");
                 Console.WriteLine("Stan zasobow: Vaccines:{0}, Tests:{1}", hospital.Vaccines.Count, hospital.Tests.Count);
 
@@ -38,25 +42,91 @@ namespace Epidemia.Classes
                     Console.WriteLine("Dokonano zakupu testów");
                 }
 
+                foreach(var human in people)
+                {
+                    switch (human.healthCondition)
+                    {
+                        case HealthCondition.HEALTHY:
+                            if (!human.inoculated)
+                            {
+                                double infectPropb = StaticRandom.Rand();
+                                if(infectPropb < 0.5f)
+                                {
+                                    Console.WriteLine("Pacjent {0} sie zaraził", human.identifier);
+                                    human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
+                                }
+                            }
+                            break;
+                        case HealthCondition.INFECTED:
+                            if(human.InfectionTime == 0)
+                            {
+                                Console.WriteLine("Pacjent {0} zachorował", human.identifier);
+                                human.setHealthStatus(true, HealthCondition.ILL, false, false);
+                            }else
+                            {
+                                double infectPropb = StaticRandom.Rand();
+                                if (infectPropb < 0.5f)
+                                {
+                                    Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                    infectOtherCount++;
+                                }
+                            }
+                            break;
+                        case HealthCondition.ILL:
+                            if(human.IllnessTime == 0)
+                            {
+                                Console.WriteLine("Pacjent {0} potrzebuje respiratora", human.identifier);
+                                human.setHealthStatus(true, HealthCondition.TERMINALLY_ILL, human.tested, false);
+                            }else
+                            {
+                                Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                infectOtherCount++;
+                            }
+                            break;
+                        case HealthCondition.TERMINALLY_ILL:
+                            if(human.TerminalIllnessTime == 0)
+                            {
+                                Console.WriteLine("Pacjent {0} umarł na śmierć", human.identifier);
+                                human.setHealthStatus(true, HealthCondition.DEAD, human.tested, false);
+                            }else
+                            {
+                                Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                infectOtherCount++;
+                            }
+                            break;
+                        case HealthCondition.DEAD:
+                            break;
+                    }
+                }
 
-                // Bed.cs - nic sie nie dzieje
-                
-                // Human.cs - HEALTHY - other - może zostać zainfekowany
-                // Human.cs - HEALTHY - tested - może zostać zainfekowany
-                // Human.cs - HEALTHY - inoculated - nic sie nie dzieje
-                // Human.cs - INFECTED - może infekować innych
-                // Human.cs - INFECTED - po infectionTime staje się chory
-                // Human.cs - ILL - infekuje innych
-                // Human.cs - ILL - po illnessTime staje się terminalnie chory
+                for(int i = 0; i < infectOtherCount; i++)
+                {
+                    virus.infect(ref people);
+                }
+
+                if (virus.IsMutable)
+                {
+                    virus.mutate(ref people);
+                }
+
+
+                // Bed.cs - nic sie nie dzieje - checked
+                // Human.cs - HEALTHY - other - może zostać zainfekowany - checked
+                // Human.cs - HEALTHY - tested - może zostać zainfekowany -checked
+                // Human.cs - HEALTHY - inoculated - nic sie nie dzieje - checked
+                // Human.cs - INFECTED - może infekować innych - checked
+                // Human.cs - INFECTED - po infectionTime staje się chory - checked
+                // Human.cs - ILL - infekuje innych - checked
+                // Human.cs - ILL - po illnessTime staje się terminalnie chory - checked
                 // Human.cs - TERMINALLY_ILL - infekuje innych
-                // Human.cs - TERMINALLY_ILL - po terminalIllnessTime umiera
+                // Human.cs - TERMINALLY_ILL - po terminalIllnessTime umiera - checked
+                // Hospital.cs - Vaccines - jeżeli się skończą kupujemy nowe - checked
+                // Hospital.cs - Tests - jeżeli się skończą kupujemy nowe - checked
 
-                // Hospital.cs - Vaccines - jeżeli się skończą kupujemy nowe checked
-                // Hospital.cs - Tests - jeżeli się skończą kupujemy nowe checked
-                
                 // Virus.cs - z bardzo niewielkim prawdopodobieństwem może mutować
                 // wszyscy pacjenci posiadają wtedy inoculated=false
 
+                
                 Thread.Sleep(1000);
             }
         }
