@@ -1,20 +1,17 @@
-﻿using Epidemia.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Epidemia
 {
     public partial class Window : Form
     {
+
+        public List<Button> bedButtons = new List<Button>();
+        public List<Button> humanButtons = new List<Button>();
+        public List<Button> vaccineButtons = new List<Button>();
+        public List<Button> testButtons = new List<Button>();
+
 
         public Window()
         {
@@ -37,14 +34,83 @@ namespace Epidemia
                 MessageBox.Show("Jedna z wartości wprowadzonych do pól tekstowych jest niepoprawna", "Niepoprawne wartości", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            initiateButtons();
             var epidemia = new Epidemia();
             epidemia.Start();
-
-            /*if(this.population == 0)
-            {
-                MessageBox.Show("Cała populacja została zabita przez wirusa :(", "Smutno nam", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }*/
         }
 
+        private void initiateButtons()
+        {
+            for (int i = 0; i < Epidemia.bedsAmount; i++)
+            {
+                Button tempButton = new Button();
+                tempButton.Text = "";
+                tempButton.Image = Properties.Resources._041_hospital_bed1;
+                tempButton.Width = 50;
+                tempButton.Height = 50;
+                tempButton.FlatStyle = FlatStyle.Flat;
+                tempButton.FlatAppearance.BorderSize = 0;
+                tempButton.Dock = DockStyle.Fill;
+                bedButtons.Add(tempButton);
+                this.bedsTable.Controls.Add(tempButton);
+            }
+
+            for (int i = 0; i < Epidemia.respiratorsAmount; i++)
+            {
+                Button tempButton = new Button();
+                tempButton.Text = "";
+                tempButton.Image = Properties.Resources._006_lungs;
+                tempButton.Width = 50;
+                tempButton.Height = 50;
+                tempButton.FlatStyle = FlatStyle.Flat;
+                tempButton.FlatAppearance.BorderSize = 0;
+                tempButton.Dock = DockStyle.Fill;
+                bedButtons.Add(tempButton);
+                this.bedsTable.Controls.Add(tempButton);
+            }
+
+
+            for (int i = 0; i < Epidemia.vaccinesSupply; i++)
+            {
+                Button tempButton = new Button();
+                tempButton.Text = "";
+                tempButton.Image = Properties.Resources._028_vaccine;
+                tempButton.Width = 50;
+                tempButton.Height = 50;
+                tempButton.FlatStyle = FlatStyle.Flat;
+                tempButton.FlatAppearance.BorderSize = 0;
+                tempButton.Dock = DockStyle.Fill;
+                vaccineButtons.Add(tempButton);
+                this.vaccinesTable.Controls.Add(tempButton);
+            }
+
+            for (int i = 0; i < Epidemia.testsSupply; i++)
+            {
+                Button tempButton = new Button();
+                tempButton.Text = "";
+                tempButton.Image = Properties.Resources._033_vaccine;
+                tempButton.Width = 50;
+                tempButton.Height = 50;
+                tempButton.FlatStyle = FlatStyle.Flat;
+                tempButton.FlatAppearance.BorderSize = 0;
+                tempButton.Dock = DockStyle.Fill;
+                testButtons.Add(tempButton);
+                this.labTable.Controls.Add(tempButton);
+            }
+
+            for (int i = 0; i < Epidemia.population; i++)
+            {
+                Button tempButton = new Button();
+                tempButton.Text = "";
+                tempButton.Image = Properties.Resources._013_stayhome;
+                tempButton.Width = 50;
+                tempButton.Height = 50;
+                tempButton.FlatStyle = FlatStyle.Flat;
+                tempButton.FlatAppearance.BorderSize = 0;
+                tempButton.Dock = DockStyle.Fill;
+                humanButtons.Add(tempButton);
+                this.populationTable.Controls.Add(tempButton);
+            }
+        }
     }
 }

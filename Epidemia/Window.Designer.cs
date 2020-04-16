@@ -42,23 +42,29 @@
             this.label1 = new System.Windows.Forms.Label();
             this.bedsamounttb = new System.Windows.Forms.TextBox();
             this.populationtb = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.hospitalPanel = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.populationPanel = new System.Windows.Forms.Panel();
+            this.labPanel = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.vaccinesPanel = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
+            this.bedsTable = new System.Windows.Forms.TableLayoutPanel();
+            this.populationTable = new System.Windows.Forms.TableLayoutPanel();
+            this.labTable = new System.Windows.Forms.TableLayoutPanel();
+            this.vaccinesTable = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.hospitalPanel.SuspendLayout();
             this.panel6.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.populationPanel.SuspendLayout();
+            this.labPanel.SuspendLayout();
             this.panel8.SuspendLayout();
+            this.vaccinesPanel.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel9.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +87,7 @@
             this.panel1.Controls.Add(this.populationtb);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(209, 583);
+            this.panel1.Size = new System.Drawing.Size(209, 744);
             this.panel1.TabIndex = 0;
             // 
             // label10
@@ -151,9 +157,10 @@
             // 
             // startSimulationBtn
             // 
+            this.startSimulationBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startSimulationBtn.Font = new System.Drawing.Font("Fira Sans Light", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.startSimulationBtn.ForeColor = System.Drawing.Color.White;
-            this.startSimulationBtn.Location = new System.Drawing.Point(15, 494);
+            this.startSimulationBtn.Location = new System.Drawing.Point(15, 607);
             this.startSimulationBtn.Margin = new System.Windows.Forms.Padding(0);
             this.startSimulationBtn.Name = "startSimulationBtn";
             this.startSimulationBtn.Size = new System.Drawing.Size(181, 78);
@@ -210,14 +217,15 @@
             this.populationtb.Size = new System.Drawing.Size(182, 20);
             this.populationtb.TabIndex = 0;
             // 
-            // panel2
+            // hospitalPanel
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel2.Controls.Add(this.panel6);
-            this.panel2.Location = new System.Drawing.Point(215, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(263, 471);
-            this.panel2.TabIndex = 1;
+            this.hospitalPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.hospitalPanel.Controls.Add(this.bedsTable);
+            this.hospitalPanel.Controls.Add(this.panel6);
+            this.hospitalPanel.Location = new System.Drawing.Point(215, 5);
+            this.hospitalPanel.Name = "hospitalPanel";
+            this.hospitalPanel.Size = new System.Drawing.Size(263, 592);
+            this.hospitalPanel.TabIndex = 1;
             // 
             // panel6
             // 
@@ -239,22 +247,25 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Szpital - łóżka";
             // 
-            // panel3
+            // populationPanel
             // 
-            this.panel3.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel3.Location = new System.Drawing.Point(487, 13);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(495, 470);
-            this.panel3.TabIndex = 2;
+            this.populationPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.populationPanel.Controls.Add(this.populationTable);
+            this.populationPanel.Controls.Add(this.panel7);
+            this.populationPanel.Location = new System.Drawing.Point(487, 6);
+            this.populationPanel.Name = "populationPanel";
+            this.populationPanel.Size = new System.Drawing.Size(617, 591);
+            this.populationPanel.TabIndex = 2;
             // 
-            // panel4
+            // labPanel
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel4.Controls.Add(this.panel8);
-            this.panel4.Location = new System.Drawing.Point(991, 13);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 470);
-            this.panel4.TabIndex = 3;
+            this.labPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.labPanel.Controls.Add(this.labTable);
+            this.labPanel.Controls.Add(this.panel8);
+            this.labPanel.Location = new System.Drawing.Point(1110, 6);
+            this.labPanel.Name = "labPanel";
+            this.labPanel.Size = new System.Drawing.Size(232, 591);
+            this.labPanel.TabIndex = 3;
             // 
             // panel8
             // 
@@ -262,7 +273,7 @@
             this.panel8.Controls.Add(this.label8);
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(200, 28);
+            this.panel8.Size = new System.Drawing.Size(245, 28);
             this.panel8.TabIndex = 2;
             // 
             // label8
@@ -276,21 +287,22 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Laboratorium - testy";
             // 
-            // panel5
+            // vaccinesPanel
             // 
-            this.panel5.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel5.Location = new System.Drawing.Point(216, 489);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(975, 83);
-            this.panel5.TabIndex = 4;
+            this.vaccinesPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.vaccinesPanel.Controls.Add(this.vaccinesTable);
+            this.vaccinesPanel.Location = new System.Drawing.Point(216, 602);
+            this.vaccinesPanel.Name = "vaccinesPanel";
+            this.vaccinesPanel.Size = new System.Drawing.Size(1126, 95);
+            this.vaccinesPanel.TabIndex = 4;
             // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.Black;
             this.panel7.Controls.Add(this.label7);
-            this.panel7.Location = new System.Drawing.Point(487, 12);
+            this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(495, 28);
+            this.panel7.Size = new System.Drawing.Size(617, 28);
             this.panel7.TabIndex = 1;
             // 
             // label7
@@ -298,7 +310,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(12, 6);
+            this.label7.Location = new System.Drawing.Point(12, 5);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(75, 18);
             this.label7.TabIndex = 1;
@@ -308,9 +320,9 @@
             // 
             this.panel9.BackColor = System.Drawing.Color.Black;
             this.panel9.Controls.Add(this.label9);
-            this.panel9.Location = new System.Drawing.Point(215, 489);
+            this.panel9.Location = new System.Drawing.Point(215, 602);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(976, 28);
+            this.panel9.Size = new System.Drawing.Size(1127, 28);
             this.panel9.TabIndex = 3;
             // 
             // label9
@@ -324,28 +336,140 @@
             this.label9.TabIndex = 3;
             this.label9.Text = "Przychodnia - szczepienia";
             // 
+            // bedsTable
+            // 
+            this.bedsTable.ColumnCount = 4;
+            this.bedsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.bedsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.bedsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.bedsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.bedsTable.Location = new System.Drawing.Point(1, 28);
+            this.bedsTable.Name = "bedsTable";
+            this.bedsTable.RowCount = 20;
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.bedsTable.Size = new System.Drawing.Size(262, 564);
+            this.bedsTable.TabIndex = 1;
+            // 
+            // populationTable
+            // 
+            this.populationTable.ColumnCount = 10;
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.populationTable.Location = new System.Drawing.Point(0, 27);
+            this.populationTable.Name = "populationTable";
+            this.populationTable.RowCount = 10;
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.populationTable.Size = new System.Drawing.Size(617, 564);
+            this.populationTable.TabIndex = 2;
+            // 
+            // labTable
+            // 
+            this.labTable.ColumnCount = 4;
+            this.labTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.labTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.labTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.labTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.labTable.Location = new System.Drawing.Point(0, 27);
+            this.labTable.Name = "labTable";
+            this.labTable.RowCount = 10;
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.labTable.Size = new System.Drawing.Size(232, 564);
+            this.labTable.TabIndex = 3;
+            // 
+            // vaccinesTable
+            // 
+            this.vaccinesTable.ColumnCount = 15;
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
+            this.vaccinesTable.Location = new System.Drawing.Point(0, 29);
+            this.vaccinesTable.Name = "vaccinesTable";
+            this.vaccinesTable.RowCount = 1;
+            this.vaccinesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.vaccinesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+            this.vaccinesTable.Size = new System.Drawing.Size(1126, 63);
+            this.vaccinesTable.TabIndex = 0;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1203, 583);
+            this.ClientSize = new System.Drawing.Size(1347, 700);
             this.Controls.Add(this.panel9);
-            this.Controls.Add(this.panel7);
-            this.Controls.Add(this.panel5);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.vaccinesPanel);
+            this.Controls.Add(this.labPanel);
+            this.Controls.Add(this.populationPanel);
+            this.Controls.Add(this.hospitalPanel);
             this.Controls.Add(this.panel1);
             this.Name = "Window";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
+            this.hospitalPanel.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            this.panel4.ResumeLayout(false);
+            this.populationPanel.ResumeLayout(false);
+            this.labPanel.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            this.vaccinesPanel.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel9.ResumeLayout(false);
@@ -368,20 +492,24 @@
         private System.Windows.Forms.TextBox populationtb;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox vaccinessupplytb;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel hospitalPanel;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel populationPanel;
+        private System.Windows.Forms.Panel labPanel;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel vaccinesPanel;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox respiratoramounttb;
+        private System.Windows.Forms.TableLayoutPanel bedsTable;
+        private System.Windows.Forms.TableLayoutPanel populationTable;
+        private System.Windows.Forms.TableLayoutPanel labTable;
+        private System.Windows.Forms.TableLayoutPanel vaccinesTable;
     }
 }
 

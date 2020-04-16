@@ -75,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -88,6 +89,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\006-lungs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\003-difficulty breathing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\013-stayhome.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\024-cough.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\028-vaccine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\033-vaccine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\041-hospital bed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\041-hospital bed1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
