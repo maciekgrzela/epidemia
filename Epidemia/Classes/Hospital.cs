@@ -109,7 +109,7 @@ namespace Epidemia.Classes
         }
         public void orderBeds(int amount, int withRespirator) 
         {
-            for (int i = 0; i < amount - withRespirator; i++)
+            for (int i = 0; i < amount; i++)
             {
                 this.Beds.Add(new Bed(Guid.NewGuid(), false, false));
             }

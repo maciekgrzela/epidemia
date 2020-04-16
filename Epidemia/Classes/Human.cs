@@ -140,6 +140,14 @@ namespace Epidemia.Classes
                 vaccines.RemoveAt(0);
             }
         }
+
+        public void recoverTimes()
+        {
+            this.InfectionTime = 10;
+            this.IllnessTime = 5;
+            this.TerminalIllnessTime = 3;
+        }
+
         
 
         public void live()
@@ -154,9 +162,15 @@ namespace Epidemia.Classes
                         {
                             if (this.inoculated == false)
                             {
-                                lock (allowToInoculate)
+                                if(Monitor.TryEnter(allowToInoculate, new TimeSpan(0,0,1)))
                                 {
-                                    this.inoculate();
+                                    try
+                                    {
+                                        this.inoculate();
+                                    }finally
+                                    {
+                                        Monitor.Exit(allowToInoculate);
+                                    }
                                 }
                             }
                             else
@@ -166,35 +180,47 @@ namespace Epidemia.Classes
                         }
                         else
                         {
-                            lock (allowToMakeTest)
+                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
                             {
-                                this.makeTest();
+                                try
+                                {
+                                    this.makeTest();
+                                }finally
+                                {
+                                    Monitor.Exit(allowToMakeTest);
+                                }
                             }
                         }
                         // może zrobić test - checked
                         // jeżeli jego test okaże się pozytywny, może wziąć szczepionkę - checked
-                        // może się stać zainfekowany (za sprawą wątku postępu choroby)
+                        // może się stać zainfekowany (za sprawą wątku postępu choroby) - checked
                         break;
                     case HealthCondition.INFECTED:
                         this.InfectionTime--;
                         Console.WriteLine("Pacjent {0} jest zainfekowany", this.identifier);
-                        // może zainfekować innych (za sprawą wątku postępu choroby)
-                        // może stać się chory (za sprawą wątku postępu choroby)
+                        // może zainfekować innych (za sprawą wątku postępu choroby) - checked
+                        // może stać się chory (za sprawą wątku postępu choroby) - checked
                         break;
                     case HealthCondition.ILL:
                         this.IllnessTime--;
                         Guid bedIdentifier = Guid.Empty;
-                        lock (allowToFindBed)
+                        if(Monitor.TryEnter(allowToFindBed, new TimeSpan(0,0,1)))
                         {
-                            Hospital hospital2 = Hospital.Instance;
-                            Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
-                            foreach(var bed in hospital2.Beds)
+                            try
                             {
-                                if (!bed.isOccupied)
+                                Hospital hospital2 = Hospital.Instance;
+                                Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
+                                foreach (var bed in hospital2.Beds)
                                 {
-                                    bed.isOccupied = true;
-                                    bedIdentifier = bed.identifier;
+                                    if (!bed.isOccupied && !bed.hasRespirator)
+                                    {
+                                        bed.isOccupied = true;
+                                        bedIdentifier = bed.identifier;
+                                    }
                                 }
+                            }finally
+                            {
+                                Monitor.Exit(allowToFindBed);
                             }
                         }
 
@@ -214,17 +240,24 @@ namespace Epidemia.Classes
                         this.TerminalIllnessTime--;
                         Console.WriteLine("Pacjent {0} jest terminalnie chory", this.identifier);
                         Guid bedIdentifier2 = Guid.Empty;
-                        lock (allowToFindBed)
+                        if (Monitor.TryEnter(allowToFindBed, new TimeSpan(0, 0, 1)))
                         {
-                            Hospital hospital2 = Hospital.Instance;
-                            Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
-                            foreach (var bed in hospital2.Beds)
+                            try
                             {
-                                if (!bed.isOccupied && bed.hasRespirator)
+                                Hospital hospital2 = Hospital.Instance;
+                                Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
+                                foreach (var bed in hospital2.Beds)
                                 {
-                                    bed.isOccupied = true;
-                                    bedIdentifier = bed.identifier;
+                                    if (!bed.isOccupied && bed.hasRespirator)
+                                    {
+                                        bed.isOccupied = true;
+                                        bedIdentifier = bed.identifier;
+                                    }
                                 }
+                            }
+                            finally
+                            {
+                                Monitor.Exit(allowToFindBed);
                             }
                         }
 

@@ -50,7 +50,7 @@ namespace Epidemia.Classes
                             if (!human.inoculated)
                             {
                                 double infectPropb = StaticRandom.Rand();
-                                if(infectPropb < 0.5f)
+                                if(infectPropb < 0.3f)
                                 {
                                     Console.WriteLine("Pacjent {0} sie zaraził", human.identifier);
                                     human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
@@ -58,14 +58,16 @@ namespace Epidemia.Classes
                             }
                             break;
                         case HealthCondition.INFECTED:
-                            if(human.InfectionTime == 0)
+                            Console.WriteLine("Wartość infectionTime: {0}", human.InfectionTime);
+                            if(human.InfectionTime <= 0)
                             {
+                                human.recoverTimes();
                                 Console.WriteLine("Pacjent {0} zachorował", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.ILL, false, false);
                             }else
                             {
                                 double infectPropb = StaticRandom.Rand();
-                                if (infectPropb < 0.5f)
+                                if (infectPropb < 0.3f)
                                 {
                                     Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
                                     infectOtherCount++;
@@ -73,8 +75,9 @@ namespace Epidemia.Classes
                             }
                             break;
                         case HealthCondition.ILL:
-                            if(human.IllnessTime == 0)
+                            if(human.IllnessTime <= 0)
                             {
+                                human.recoverTimes();
                                 Console.WriteLine("Pacjent {0} potrzebuje respiratora", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.TERMINALLY_ILL, human.tested, false);
                             }else
@@ -84,8 +87,9 @@ namespace Epidemia.Classes
                             }
                             break;
                         case HealthCondition.TERMINALLY_ILL:
-                            if(human.TerminalIllnessTime == 0)
+                            if(human.TerminalIllnessTime <= 0)
                             {
+                                human.recoverTimes();
                                 Console.WriteLine("Pacjent {0} umarł na śmierć", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.DEAD, human.tested, false);
                             }else

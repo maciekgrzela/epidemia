@@ -39,7 +39,7 @@ namespace Epidemia
             hospital.orderVaccines(Epidemia.vaccinesSupply);
 
             Virus virus = Virus.Instance;
-            virus.initialize(population / 5, true, population / 50);
+            virus.initialize(population / 10, true, population / 50);
 
             diseaseProgress = new Thread(new ThreadStart(disease.disease));
             diseaseProgress.Start();
