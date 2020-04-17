@@ -54,6 +54,10 @@ namespace Epidemia.Classes
                                 {
                                     Console.WriteLine("Pacjent {0} sie zaraził", human.identifier);
                                     human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
+                                    Epidemia.Form.Invoke(new Action(() =>
+                                    {
+                                        Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
+                                    }));
                                 }
                             }
                             break;
@@ -64,7 +68,12 @@ namespace Epidemia.Classes
                                 human.recoverTimes();
                                 Console.WriteLine("Pacjent {0} zachorował", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.ILL, false, false);
-                            }else
+                                Epidemia.Form.Invoke(new Action(() =>
+                                {
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
+                                }));
+                            }
+                            else
                             {
                                 double infectPropb = StaticRandom.Rand();
                                 if (infectPropb < 0.3f)
@@ -80,7 +89,12 @@ namespace Epidemia.Classes
                                 human.recoverTimes();
                                 Console.WriteLine("Pacjent {0} potrzebuje respiratora", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.TERMINALLY_ILL, human.tested, false);
-                            }else
+                                Epidemia.Form.Invoke(new Action(() =>
+                                {
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
+                                }));
+                            }
+                            else
                             {
                                 Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
                                 infectOtherCount++;
@@ -92,7 +106,12 @@ namespace Epidemia.Classes
                                 human.recoverTimes();
                                 Console.WriteLine("Pacjent {0} umarł na śmierć", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.DEAD, human.tested, false);
-                            }else
+                                Epidemia.Form.Invoke(new Action(() =>
+                                {
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.coffin;
+                                }));
+                            }
+                            else
                             {
                                 Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
                                 infectOtherCount++;
@@ -129,9 +148,7 @@ namespace Epidemia.Classes
 
                 // Virus.cs - z bardzo niewielkim prawdopodobieństwem może mutować
                 // wszyscy pacjenci posiadają wtedy inoculated=false
-
-                
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
             }
         }
     }

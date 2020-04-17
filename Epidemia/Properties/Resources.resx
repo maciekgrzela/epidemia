@@ -124,11 +124,17 @@
   <data name="041-hospital bed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\041-hospital bed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="041-hospital bed1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\041-hospital bed1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="013-stayhome" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\013-stayhome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="041-hospital bed1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\041-hospital bed1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="034-fever" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\034-fever.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="006-lungs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\006-lungs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="003-difficulty breathing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\003-difficulty breathing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,10 +142,13 @@
   <data name="028-vaccine" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\028-vaccine.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="041-hospital bed-red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\041-hospital bed-red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="024-cough" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\024-cough.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="006-lungs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\006-lungs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="coffin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\coffin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

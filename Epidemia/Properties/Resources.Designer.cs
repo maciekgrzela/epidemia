@@ -123,6 +123,16 @@ namespace Epidemia.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _034_fever {
+            get {
+                object obj = ResourceManager.GetObject("034-fever", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _041_hospital_bed {
             get {
                 object obj = ResourceManager.GetObject("041-hospital bed", resourceCulture);
@@ -133,9 +143,29 @@ namespace Epidemia.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _041_hospital_bed_red {
+            get {
+                object obj = ResourceManager.GetObject("041-hospital bed-red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _041_hospital_bed1 {
             get {
                 object obj = ResourceManager.GetObject("041-hospital bed1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap coffin {
+            get {
+                object obj = ResourceManager.GetObject("coffin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

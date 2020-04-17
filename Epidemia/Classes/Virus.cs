@@ -108,7 +108,7 @@ namespace Epidemia.Classes
             int willBeInfected = StaticRandom.Rand(0, this.infectionRatio);
             for(int i = 0; i < willBeInfected; i++)
             {
-                if(population[i].healthCondition == HealthCondition.HEALTHY)
+                if(population[i].healthCondition == HealthCondition.HEALTHY && population[i].inoculated == false)
                 {
                     population[i].setHealthStatus(true, HealthCondition.INFECTED, false, false);
                 }

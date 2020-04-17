@@ -43,29 +43,29 @@
             this.bedsamounttb = new System.Windows.Forms.TextBox();
             this.populationtb = new System.Windows.Forms.TextBox();
             this.hospitalPanel = new System.Windows.Forms.Panel();
+            this.bedsTable = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.populationPanel = new System.Windows.Forms.Panel();
+            this.populationTable = new System.Windows.Forms.TableLayoutPanel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
             this.labPanel = new System.Windows.Forms.Panel();
+            this.labTable = new System.Windows.Forms.TableLayoutPanel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.vaccinesPanel = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.vaccinesTable = new System.Windows.Forms.TableLayoutPanel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
-            this.bedsTable = new System.Windows.Forms.TableLayoutPanel();
-            this.populationTable = new System.Windows.Forms.TableLayoutPanel();
-            this.labTable = new System.Windows.Forms.TableLayoutPanel();
-            this.vaccinesTable = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
             this.hospitalPanel.SuspendLayout();
             this.panel6.SuspendLayout();
             this.populationPanel.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.labPanel.SuspendLayout();
             this.panel8.SuspendLayout();
             this.vaccinesPanel.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -227,115 +227,6 @@
             this.hospitalPanel.Size = new System.Drawing.Size(263, 592);
             this.hospitalPanel.TabIndex = 1;
             // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.Black;
-            this.panel6.Controls.Add(this.label6);
-            this.panel6.Location = new System.Drawing.Point(1, 1);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(261, 28);
-            this.panel6.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(4, 5);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 18);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Szpital - łóżka";
-            // 
-            // populationPanel
-            // 
-            this.populationPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.populationPanel.Controls.Add(this.populationTable);
-            this.populationPanel.Controls.Add(this.panel7);
-            this.populationPanel.Location = new System.Drawing.Point(487, 6);
-            this.populationPanel.Name = "populationPanel";
-            this.populationPanel.Size = new System.Drawing.Size(617, 591);
-            this.populationPanel.TabIndex = 2;
-            // 
-            // labPanel
-            // 
-            this.labPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.labPanel.Controls.Add(this.labTable);
-            this.labPanel.Controls.Add(this.panel8);
-            this.labPanel.Location = new System.Drawing.Point(1110, 6);
-            this.labPanel.Name = "labPanel";
-            this.labPanel.Size = new System.Drawing.Size(232, 591);
-            this.labPanel.TabIndex = 3;
-            // 
-            // panel8
-            // 
-            this.panel8.BackColor = System.Drawing.Color.Black;
-            this.panel8.Controls.Add(this.label8);
-            this.panel8.Location = new System.Drawing.Point(0, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(245, 28);
-            this.panel8.TabIndex = 2;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(7, 5);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(146, 18);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "Laboratorium - testy";
-            // 
-            // vaccinesPanel
-            // 
-            this.vaccinesPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.vaccinesPanel.Controls.Add(this.vaccinesTable);
-            this.vaccinesPanel.Location = new System.Drawing.Point(216, 602);
-            this.vaccinesPanel.Name = "vaccinesPanel";
-            this.vaccinesPanel.Size = new System.Drawing.Size(1126, 95);
-            this.vaccinesPanel.TabIndex = 4;
-            // 
-            // panel7
-            // 
-            this.panel7.BackColor = System.Drawing.Color.Black;
-            this.panel7.Controls.Add(this.label7);
-            this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(617, 28);
-            this.panel7.TabIndex = 1;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(12, 5);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 18);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Populacja";
-            // 
-            // panel9
-            // 
-            this.panel9.BackColor = System.Drawing.Color.Black;
-            this.panel9.Controls.Add(this.label9);
-            this.panel9.Location = new System.Drawing.Point(215, 602);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1127, 28);
-            this.panel9.TabIndex = 3;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(6, 5);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(181, 18);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Przychodnia - szczepienia";
-            // 
             // bedsTable
             // 
             this.bedsTable.ColumnCount = 4;
@@ -369,6 +260,36 @@
             this.bedsTable.Size = new System.Drawing.Size(262, 564);
             this.bedsTable.TabIndex = 1;
             // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.Black;
+            this.panel6.Controls.Add(this.label6);
+            this.panel6.Location = new System.Drawing.Point(1, 1);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(261, 28);
+            this.panel6.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(4, 5);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 18);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Szpital - łóżka";
+            // 
+            // populationPanel
+            // 
+            this.populationPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.populationPanel.Controls.Add(this.populationTable);
+            this.populationPanel.Controls.Add(this.panel7);
+            this.populationPanel.Location = new System.Drawing.Point(487, 6);
+            this.populationPanel.Name = "populationPanel";
+            this.populationPanel.Size = new System.Drawing.Size(617, 591);
+            this.populationPanel.TabIndex = 2;
+            // 
             // populationTable
             // 
             this.populationTable.ColumnCount = 10;
@@ -398,6 +319,36 @@
             this.populationTable.Size = new System.Drawing.Size(617, 564);
             this.populationTable.TabIndex = 2;
             // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.Black;
+            this.panel7.Controls.Add(this.label7);
+            this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(617, 28);
+            this.panel7.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(12, 5);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 18);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Populacja";
+            // 
+            // labPanel
+            // 
+            this.labPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.labPanel.Controls.Add(this.labTable);
+            this.labPanel.Controls.Add(this.panel8);
+            this.labPanel.Location = new System.Drawing.Point(1110, 6);
+            this.labPanel.Name = "labPanel";
+            this.labPanel.Size = new System.Drawing.Size(232, 591);
+            this.labPanel.TabIndex = 3;
+            // 
             // labTable
             // 
             this.labTable.ColumnCount = 4;
@@ -421,6 +372,35 @@
             this.labTable.Size = new System.Drawing.Size(232, 564);
             this.labTable.TabIndex = 3;
             // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.Black;
+            this.panel8.Controls.Add(this.label8);
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(245, 28);
+            this.panel8.TabIndex = 2;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(7, 5);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(146, 18);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Laboratorium - testy";
+            // 
+            // vaccinesPanel
+            // 
+            this.vaccinesPanel.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.vaccinesPanel.Controls.Add(this.vaccinesTable);
+            this.vaccinesPanel.Location = new System.Drawing.Point(216, 602);
+            this.vaccinesPanel.Name = "vaccinesPanel";
+            this.vaccinesPanel.Size = new System.Drawing.Size(1126, 95);
+            this.vaccinesPanel.TabIndex = 4;
+            // 
             // vaccinesTable
             // 
             this.vaccinesTable.ColumnCount = 15;
@@ -443,9 +423,29 @@
             this.vaccinesTable.Name = "vaccinesTable";
             this.vaccinesTable.RowCount = 1;
             this.vaccinesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.vaccinesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+            this.vaccinesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
             this.vaccinesTable.Size = new System.Drawing.Size(1126, 63);
             this.vaccinesTable.TabIndex = 0;
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.Black;
+            this.panel9.Controls.Add(this.label9);
+            this.panel9.Location = new System.Drawing.Point(215, 602);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(1127, 28);
+            this.panel9.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Fira Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(6, 5);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(181, 18);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Przychodnia - szczepienia";
             // 
             // Window
             // 
@@ -466,12 +466,12 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.populationPanel.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.labPanel.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.vaccinesPanel.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.ResumeLayout(false);
@@ -484,7 +484,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox testsupplytb;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button startSimulationBtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox canVirusMutatechb;
         private System.Windows.Forms.Label label1;
@@ -506,10 +505,11 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox respiratoramounttb;
-        private System.Windows.Forms.TableLayoutPanel bedsTable;
-        private System.Windows.Forms.TableLayoutPanel populationTable;
-        private System.Windows.Forms.TableLayoutPanel labTable;
-        private System.Windows.Forms.TableLayoutPanel vaccinesTable;
+        public System.Windows.Forms.Button startSimulationBtn;
+        public System.Windows.Forms.TableLayoutPanel vaccinesTable;
+        public System.Windows.Forms.TableLayoutPanel bedsTable;
+        public System.Windows.Forms.TableLayoutPanel populationTable;
+        public System.Windows.Forms.TableLayoutPanel labTable;
     }
 }
 
