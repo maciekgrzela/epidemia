@@ -69,12 +69,22 @@ namespace Epidemia.Classes
                             if(human.InfectionTime <= 0)
                             {
                                 human.recoverTimes();
+
+                                double recoveryProb = StaticRandom.Rand();
+                                if(recoveryProb<0.15f){
+                                    human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
+                                    Epidemia.Form.Invoke(new Action(() => {
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                    }));
+                                }
+                                else {
                                 Console.WriteLine("Pacjent {0} zachorował", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.ILL, false, false);
                                 Epidemia.Form.Invoke(new Action(() =>
                                 {
                                     Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
                                 }));
+                                }
                             }
                             else
                             {
@@ -100,12 +110,21 @@ namespace Epidemia.Classes
                             if(human.IllnessTime <= 0)
                             {
                                 human.recoverTimes();
+                                double recoveryProb = StaticRandom.Rand();
+                                if(recoveryProb<0.1f){
+                                    human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
+                                    Epidemia.Form.Invoke(new Action(() => {
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                    }));
+                                }
+                                else {
                                 Console.WriteLine("Pacjent {0} potrzebuje respiratora", human.identifier);
                                 human.setHealthStatus(true, HealthCondition.TERMINALLY_ILL, human.tested, false);
                                 Epidemia.Form.Invoke(new Action(() =>
                                 {
                                     Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
                                 }));
+                                }
                             }
                             else
                             {
@@ -184,7 +203,7 @@ namespace Epidemia.Classes
                 if(newVaccinesAreReady>0){
                     newVaccinesAreReady--;
                 } else{
-                    newVaccinesAreReady=3;
+                    newVaccinesAreReady=5;
                 }
                 if(newTestsAreReady>0){
                     newTestsAreReady--;
