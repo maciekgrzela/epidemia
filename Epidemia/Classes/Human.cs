@@ -46,9 +46,9 @@ namespace Epidemia.Classes
         private static readonly object changeHumanStatus = new object();
         private static readonly object varLock = new object();
 
-        private int infectionTime = 10;
-        private int illnessTime = 5;
-        private int terminalIllnessTime = 3;
+        private int infectionTime = 6;
+        private int illnessTime = 10;
+        private int terminalIllnessTime = 4;
         private Button button;
 
         public int InfectionTime
@@ -130,7 +130,7 @@ namespace Epidemia.Classes
             List<Test> tests = hospital.Tests;
             if(tests.Count > 0)
             {
-                double positive = StaticRandom.Rand();
+                /*double positive = StaticRandom.Rand();
                 tests[0].isPositive = positive < 0.3f ? true : false;
                 Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, tests[0].isPositive);
                 if (tests[0].isPositive == true)
@@ -142,6 +142,21 @@ namespace Epidemia.Classes
                 {
                     this.setHealthStatus(false, HealthCondition.HEALTHY, true, false);
                     Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                }
+                Epidemia.Form.Invoke(new Action(() => {
+                    Epidemia.Form.labTable.Controls.RemoveAt(0);
+                }));
+                tests.RemoveAt(0);
+                */
+                if (this.healthCondition==HealthCondition.HEALTHY){
+                    tests[0].isPositive=false;
+                    Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, tests[0].isPositive);
+                    this.setHealthStatus(false, HealthCondition.HEALTHY, true, false);
+                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                } else {
+                    tests[0].isPositive=true;
+                    Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, tests[0].isPositive);
+                    this.setHealthStatus(this.hasVirus, this.healthCondition, true, false);
                 }
                 Epidemia.Form.Invoke(new Action(() => {
                     Epidemia.Form.labTable.Controls.RemoveAt(0);
@@ -170,9 +185,9 @@ namespace Epidemia.Classes
 
         public void recoverTimes()
         {
-            this.InfectionTime = 10;
-            this.IllnessTime = 5;
-            this.TerminalIllnessTime = 3;
+            this.InfectionTime = 6;
+            this.IllnessTime = 10;
+            this.TerminalIllnessTime = 4;
         }
 
         
@@ -232,6 +247,18 @@ namespace Epidemia.Classes
                         Epidemia.Form.Invoke(new Action(() => {
                             Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
                         }));
+                        if(this.tested==false){
+                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
+                            {
+                                try
+                                {
+                                    this.makeTest();
+                                }finally
+                                {
+                                    Monitor.Exit(allowToMakeTest);
+                                }
+                            }
+                        }
                         // może zainfekować innych (za sprawą wątku postępu choroby) - checked
                         // może stać się chory (za sprawą wątku postępu choroby) - checked
                         break;
@@ -240,6 +267,18 @@ namespace Epidemia.Classes
                         Epidemia.Form.Invoke(new Action(() => {
                             Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
                         }));
+                        if(this.tested==false){
+                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
+                            {
+                                try
+                                {
+                                    this.makeTest();
+                                }finally
+                                {
+                                    Monitor.Exit(allowToMakeTest);
+                                }
+                            }
+                        }
                         Guid bedIdentifier = Guid.Empty;
                         if(Monitor.TryEnter(allowToFindBed, new TimeSpan(0,0,1)))
                         {
@@ -268,7 +307,7 @@ namespace Epidemia.Classes
                         if(bedIdentifier != Guid.Empty)
                         {
                             Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier);
-                            Thread.Sleep(3000);
+                            Thread.Sleep((10-this.illnessTime)*250); //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
                             this.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
                             Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier).isOccupied = false;
                             Epidemia.Form.Invoke(new Action(() => {
@@ -276,6 +315,7 @@ namespace Epidemia.Classes
                                 Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
                             }));
                         }
+
                         // infekuje innych (za sprawą wątku postępu choroby)
                         // może iść do szpitala - checked
                         // może stać się terminalnie chory (za sprawą wątku postępu choroby)
@@ -285,6 +325,18 @@ namespace Epidemia.Classes
                         Epidemia.Form.Invoke(new Action(() => {
                             Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
                         }));
+                        if(this.tested==false){
+                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
+                            {
+                                try
+                                {
+                                    this.makeTest();
+                                }finally
+                                {
+                                    Monitor.Exit(allowToMakeTest);
+                                }
+                            }
+                        }
                         Console.WriteLine("Pacjent {0} jest terminalnie chory", this.identifier);
                         Guid bedIdentifier2 = Guid.Empty;
                         if (Monitor.TryEnter(allowToFindBed, new TimeSpan(0, 0, 1)))
@@ -315,7 +367,7 @@ namespace Epidemia.Classes
                         if (bedIdentifier2 != Guid.Empty)
                         {
                             Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier2);
-                            Thread.Sleep(3000);
+                            Thread.Sleep((14-this.TerminalIllnessTime)*250);  //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
                             this.healthCondition = HealthCondition.HEALTHY;
                             this.hasVirus = false;
                             Epidemia.Form.Invoke(new Action(() => {

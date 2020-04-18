@@ -25,22 +25,25 @@ namespace Epidemia.Classes
             while (true)
             {
                 int infectOtherCount = 0;
+                int newVaccinesAreReady=0;
+                int newTestsAreReady=0;
                 Hospital hospital = Hospital.Instance;
                 Virus virus = Virus.Instance;
                 Console.WriteLine("Empidemia sie rozwija");
                 Console.WriteLine("Stan zasobow: Vaccines:{0}, Tests:{1}", hospital.Vaccines.Count, hospital.Tests.Count);
 
-                if(hospital.Vaccines.Count == 0)
+                if(newVaccinesAreReady<=0)
                 {
                     hospital.orderVaccines(this.vaccinesSuply);
                     Console.WriteLine("Dokonano zakupu szczepionek");
                 }
 
-                if(hospital.Tests.Count == 0)
+                if(newTestsAreReady<=0)
                 {
                     hospital.orderTests(this.testsSupply);
                     Console.WriteLine("Dokonano zakupu testów");
                 }
+                // szpital musi czekać aż szczepionki i testy zostaną wyprodukowane
 
                 foreach(var human in people)
                 {
@@ -76,11 +79,21 @@ namespace Epidemia.Classes
                             else
                             {
                                 double infectPropb = StaticRandom.Rand();
-                                if (infectPropb < 0.3f)
-                                {
-                                    Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                    infectOtherCount++;
+                                if(human.tested==false){
+                                    if (infectPropb < 0.3f)
+                                    {
+                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                        infectOtherCount++;
+                                    }
+                                } else {
+                                    if (infectPropb < 0.15f)
+                                    {
+                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                        infectOtherCount++;
+                                    }
+                                    //jeśli chory został przetestowany jest świadomy swojego zakażenia, prawdopodobieństwo zakażenia innych spada o połowę
                                 }
+                                
                             }
                             break;
                         case HealthCondition.ILL:
@@ -96,8 +109,18 @@ namespace Epidemia.Classes
                             }
                             else
                             {
-                                Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                infectOtherCount++;
+                                double infectPropb = StaticRandom.Rand();
+                                if(human.tested==false){
+                                    Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                    infectOtherCount++;
+                                } else{
+                                    if (infectPropb < 0.5f)
+                                    {
+                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                        infectOtherCount++;
+                                    }
+                                }
+                                 //jeśli chory został przetestowany jest świadomy swojej choroby, prawdopodobieństwo zakażenia innych spada o połowę
                             }
                             break;
                         case HealthCondition.TERMINALLY_ILL:
@@ -113,8 +136,18 @@ namespace Epidemia.Classes
                             }
                             else
                             {
-                                Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                infectOtherCount++;
+                                double infectPropb = StaticRandom.Rand();
+                                if(human.tested==false){
+                                    Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                    infectOtherCount++;
+                                } else{
+                                    if (infectPropb < 0.5f)
+                                    {
+                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
+                                        infectOtherCount++;
+                                    }
+                                }
+                                 //jeśli chory został przetestowany jest świadomy swojej choroby, prawdopodobieństwo zakażenia innych spada o połowę
                             }
                             break;
                         case HealthCondition.DEAD:
@@ -148,6 +181,16 @@ namespace Epidemia.Classes
 
                 // Virus.cs - z bardzo niewielkim prawdopodobieństwem może mutować
                 // wszyscy pacjenci posiadają wtedy inoculated=false
+                if(newVaccinesAreReady>0){
+                    newVaccinesAreReady--;
+                } else{
+                    newVaccinesAreReady=3;
+                }
+                if(newTestsAreReady>0){
+                    newTestsAreReady--;
+                } else{
+                    newTestsAreReady=2;
+                }
                 Thread.Sleep(2000);
             }
         }

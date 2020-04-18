@@ -16,3 +16,13 @@ C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.csproj.Gen
 C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.exe
 C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.pdb
 C:\Users\Maciek\Desktop\Epidemia\Epidemia\Epidemia\obj\Debug\Epidemia.Window.resources
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\bin\Debug\Epidemia.exe.config
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\bin\Debug\Epidemia.exe
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\bin\Debug\Epidemia.pdb
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.csprojAssemblyReference.cache
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.Window.resources
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.Properties.Resources.resources
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.csproj.GenerateResource.cache
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.csproj.CoreCompileInputs.cache
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.exe
+C:\Users\Kasia\Source\Repos\maciekgrzela\epidemia\Epidemia\obj\Debug\Epidemia.pdb
