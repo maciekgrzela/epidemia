@@ -307,7 +307,7 @@ namespace Epidemia.Classes
                         if(bedIdentifier != Guid.Empty)
                         {
                             Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier);
-                            Thread.Sleep((10-this.illnessTime)*250); //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
+                            Thread.Sleep((10-this.illnessTime)*350); //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
                             this.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
                             Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier).isOccupied = false;
                             Epidemia.Form.Invoke(new Action(() => {
@@ -367,7 +367,7 @@ namespace Epidemia.Classes
                         if (bedIdentifier2 != Guid.Empty)
                         {
                             Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier2);
-                            Thread.Sleep((14-this.TerminalIllnessTime)*250);  //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
+                            Thread.Sleep((14-this.TerminalIllnessTime)*400);  //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
                             this.healthCondition = HealthCondition.HEALTHY;
                             this.hasVirus = false;
                             Epidemia.Form.Invoke(new Action(() => {
