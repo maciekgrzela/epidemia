@@ -104,7 +104,6 @@ namespace Epidemia.Classes
         }
         public void infect(ref List<Human> population) 
         {
-            int healthies = population.FindAll(x => x.healthCondition == HealthCondition.HEALTHY).Count;
             int willBeInfected = StaticRandom.Rand(0, this.infectionRatio);
             for(int i = 0; i < willBeInfected; i++)
             {

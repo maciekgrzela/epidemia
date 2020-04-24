@@ -50,18 +50,17 @@ namespace Epidemia.Classes
                     switch (human.healthCondition)
                     {
                         case HealthCondition.HEALTHY:
-                            if (!human.inoculated)
+                            if (human.inoculated == false && StaticRandom.Rand() < 0.3f)
                             {
-                                double infectPropb = StaticRandom.Rand();
-                                if(infectPropb < 0.3f)
+                                Console.WriteLine("Pacjent {0} sie zaraził", human.identifier);
+                                human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
+                                Epidemia.Form.Invoke(new Action(() =>
                                 {
-                                    Console.WriteLine("Pacjent {0} sie zaraził", human.identifier);
-                                    human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
-                                    Epidemia.Form.Invoke(new Action(() =>
+                                    if(human.inoculated == false)
                                     {
                                         Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
-                                    }));
-                                }
+                                    }
+                                }));
                             }
                             break;
                         case HealthCondition.INFECTED:
@@ -74,7 +73,7 @@ namespace Epidemia.Classes
                                 if(recoveryProb<0.15f){
                                     human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
                                     Epidemia.Form.Invoke(new Action(() => {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                                     }));
                                 }
                                 else {
@@ -82,7 +81,7 @@ namespace Epidemia.Classes
                                 human.setHealthStatus(true, HealthCondition.ILL, false, false);
                                 Epidemia.Form.Invoke(new Action(() =>
                                 {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.sick;
                                 }));
                                 }
                             }
@@ -114,7 +113,7 @@ namespace Epidemia.Classes
                                 if(recoveryProb<0.1f){
                                     human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
                                     Epidemia.Form.Invoke(new Action(() => {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                                     }));
                                 }
                                 else {
@@ -174,10 +173,12 @@ namespace Epidemia.Classes
                     }
                 }
 
-                for(int i = 0; i < infectOtherCount; i++)
+                virus.infect(ref people);
+
+                /**for (int i = 0; i < infectOtherCount; i++)
                 {
-                    virus.infect(ref people);
-                }
+                    
+                }**/
 
                 if (virus.IsMutable)
                 {
@@ -203,12 +204,12 @@ namespace Epidemia.Classes
                 if(newVaccinesAreReady>0){
                     newVaccinesAreReady--;
                 } else{
-                    newVaccinesAreReady=5;
+                    newVaccinesAreReady=10;
                 }
                 if(newTestsAreReady>0){
                     newTestsAreReady--;
                 } else{
-                    newTestsAreReady=2;
+                    newTestsAreReady=5;
                 }
                 Thread.Sleep(2000);
             }

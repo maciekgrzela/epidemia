@@ -48,6 +48,7 @@ namespace Epidemia
             for (int i = 0; i < population; i++)
             {
                 var thread = new Thread(new ThreadStart(people[i].live));
+                thread.IsBackground = true;
                 populationThreads.Add(thread);
             }
 

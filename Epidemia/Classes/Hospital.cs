@@ -118,6 +118,5 @@ namespace Epidemia.Classes
                 this.Beds.Add(new Bed(Guid.NewGuid(), true, false));
             }
         }
-        public void take(Human human) { }
     }
 }

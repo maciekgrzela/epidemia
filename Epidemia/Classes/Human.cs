@@ -24,7 +24,7 @@ namespace Epidemia.Classes
         {
             this.button = new Button();
             this.button.Text = "";
-            this.button.BackgroundImage = Properties.Resources._013_stayhome;
+            this.button.BackgroundImage = Properties.Resources.medical_mask;
             this.button.Width = 50;
             this.button.Height = 50;
             this.button.FlatStyle = FlatStyle.Flat;
@@ -115,12 +115,15 @@ namespace Epidemia.Classes
 
         public void setHealthStatus(bool hasVirus, HealthCondition healthCondition, bool tested, bool inoculated)
         {
-            lock (changeHumanStatus)
+            if(this.inoculated == false)
             {
-                this.hasVirus = hasVirus;
-                this.healthCondition = healthCondition;
-                this.tested = tested;
-                this.inoculated = inoculated;
+                lock (changeHumanStatus)
+                {
+                    this.hasVirus = hasVirus;
+                    this.healthCondition = healthCondition;
+                    this.tested = tested;
+                    this.inoculated = inoculated;
+                }
             }
         }
 
@@ -128,31 +131,14 @@ namespace Epidemia.Classes
         {
             Hospital hospital = Hospital.Instance;
             List<Test> tests = hospital.Tests;
-            if(tests.Count > 0)
+            if(tests.Count > 0 && this.inoculated == false)
             {
-                /*double positive = StaticRandom.Rand();
-                tests[0].isPositive = positive < 0.3f ? true : false;
-                Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, tests[0].isPositive);
-                if (tests[0].isPositive == true)
-                {
-                    this.setHealthStatus(true, HealthCondition.INFECTED, true, false);
-                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
-                }
-                else
-                {
-                    this.setHealthStatus(false, HealthCondition.HEALTHY, true, false);
-                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
-                }
-                Epidemia.Form.Invoke(new Action(() => {
-                    Epidemia.Form.labTable.Controls.RemoveAt(0);
-                }));
-                tests.RemoveAt(0);
-                */
+                Thread.Sleep(100);
                 if (this.healthCondition==HealthCondition.HEALTHY){
                     tests[0].isPositive=false;
                     Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, tests[0].isPositive);
                     this.setHealthStatus(false, HealthCondition.HEALTHY, true, false);
-                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                 } else {
                     tests[0].isPositive=true;
                     Console.WriteLine("Pacjent {0} wykonał test. Wynik: {1}", this.identifier, tests[0].isPositive);
@@ -169,14 +155,16 @@ namespace Epidemia.Classes
         {
             Hospital hospital = Hospital.Instance;
             List<Vaccine> vaccines = hospital.Vaccines;
-            if(vaccines.Count > 0)
+            if(vaccines.Count > 0 && this.inoculated == false)
             {
+                Thread.Sleep(100);
                 if (vaccines[0].isEffective)
                 {
                     this.setHealthStatus(false, HealthCondition.HEALTHY, true, true);
                     Console.WriteLine("Pacjent {0} się zaszczepił", this.identifier);
                 }
                 Epidemia.Form.Invoke(new Action(() => {
+                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                     Epidemia.Form.vaccinesTable.Controls.RemoveAt(0);
                 }));
                 vaccines.RemoveAt(0);
@@ -191,7 +179,6 @@ namespace Epidemia.Classes
         }
 
         
-
         public void live()
         {
             bool isAlive = true;
@@ -220,7 +207,7 @@ namespace Epidemia.Classes
                                 Console.WriteLine("Pacjent {0} jest zaszczepiony", this.identifier);
                                 Epidemia.Form.Invoke(new Action(() =>
                                 {
-                                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                                 }));
                             }
                         }
@@ -265,7 +252,7 @@ namespace Epidemia.Classes
                     case HealthCondition.ILL:
                         this.IllnessTime--;
                         Epidemia.Form.Invoke(new Action(() => {
-                            Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
+                            Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.sick;
                         }));
                         if(this.tested==false){
                             if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
@@ -312,7 +299,7 @@ namespace Epidemia.Classes
                             Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier).isOccupied = false;
                             Epidemia.Form.Invoke(new Action(() => {
                                 Epidemia.Form.bedsTable.Controls.Find(bedIdentifier.ToString(), true)[0].BackgroundImage = Properties.Resources._041_hospital_bed1;
-                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                             }));
                         }
 
@@ -352,7 +339,7 @@ namespace Epidemia.Classes
                                         bed.isOccupied = true;
                                         bedIdentifier2 = bed.identifier;
                                         Epidemia.Form.Invoke(new Action(() => {
-                                            Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources._041_hospital_bed_red;
+                                            Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources.lungs_red;
                                         }));
                                         break;
                                     }
@@ -368,11 +355,10 @@ namespace Epidemia.Classes
                         {
                             Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier2);
                             Thread.Sleep((17-this.TerminalIllnessTime)*350);  //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
-                            this.healthCondition = HealthCondition.HEALTHY;
-                            this.hasVirus = false;
+                            this.setHealthStatus(false, HealthCondition.HEALTHY, this.tested, this.inoculated);
                             Epidemia.Form.Invoke(new Action(() => {
                                 Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources._006_lungs;
-                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._013_stayhome;
+                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                             }));
                             Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier2).isOccupied = false;
                         }
@@ -381,7 +367,7 @@ namespace Epidemia.Classes
                         // może umrzeć (za sprawą wątku postępu choroby)
                         break;
                     case HealthCondition.DEAD:
-                        Console.WriteLine("Pacjent umarł na śmierć");
+                        Console.WriteLine("Pacjent {0} umarł na śmierć", this.identifier);
                         Epidemia.Form.Invoke(new Action(() => {
                             Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.coffin;
                         }));
