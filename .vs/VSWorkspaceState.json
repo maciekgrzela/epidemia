@@ -2,8 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\Epidemia",
-    "\\Epidemia\\Classes"
+    "\\Epidemia\\bin",
+    "\\Epidemia\\bin\\Debug",
+    "\\Epidemia\\bin\\Release",
+    "\\Epidemia\\obj",
+    "\\Epidemia\\obj\\Debug",
+    "\\Epidemia\\obj\\Debug\\TempPE",
+    "\\Epidemia\\obj\\Release",
+    "\\Epidemia\\Properties",
+    "\\Epidemia\\Resources"
   ],
-  "SelectedNode": "\\Epidemia\\Classes\\Human.cs",
+  "SelectedNode": "\\Epidemia",
   "PreviewInSolutionExplorer": false
 }

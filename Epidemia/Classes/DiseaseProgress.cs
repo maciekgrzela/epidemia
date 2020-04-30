@@ -22,13 +22,14 @@ namespace Epidemia.Classes
 
         public void disease()
         {
+            int infectOtherCount = 0;
+            int newVaccinesAreReady=0;
+            int newTestsAreReady=0;
+            Hospital hospital = Hospital.Instance;
+            Virus virus = Virus.Instance;
             while (true)
             {
-                int infectOtherCount = 0;
-                int newVaccinesAreReady=0;
-                int newTestsAreReady=0;
-                Hospital hospital = Hospital.Instance;
-                Virus virus = Virus.Instance;
+                
                 Console.WriteLine("Empidemia sie rozwija");
                 Console.WriteLine("Stan zasobow: Vaccines:{0}, Tests:{1}", hospital.Vaccines.Count, hospital.Tests.Count);
 
@@ -173,7 +174,7 @@ namespace Epidemia.Classes
                     }
                 }
 
-                virus.infect(ref people);
+                virus.infect(ref people, infectOtherCount);
 
                 /**for (int i = 0; i < infectOtherCount; i++)
                 {
@@ -201,15 +202,16 @@ namespace Epidemia.Classes
 
                 // Virus.cs - z bardzo niewielkim prawdopodobieństwem może mutować
                 // wszyscy pacjenci posiadają wtedy inoculated=false
+                infectOtherCount=0;
                 if(newVaccinesAreReady>0){
                     newVaccinesAreReady--;
                 } else{
-                    newVaccinesAreReady=10;
+                    newVaccinesAreReady=4;
                 }
                 if(newTestsAreReady>0){
                     newTestsAreReady--;
                 } else{
-                    newTestsAreReady=5;
+                    newTestsAreReady=2;
                 }
                 Thread.Sleep(2000);
             }
