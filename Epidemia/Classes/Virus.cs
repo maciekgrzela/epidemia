@@ -102,14 +102,14 @@ namespace Epidemia.Classes
                 }
             }
         }
-        public void infect(ref List<Human> population) 
+        public void infect(ref List<Human> population, int willBeInfected) 
         {
-            int willBeInfected = StaticRandom.Rand(0, this.infectionRatio);
             for(int i = 0; i < willBeInfected; i++)
             {
-                if(population[i].healthCondition == HealthCondition.HEALTHY && population[i].inoculated == false)
+                int j = StaticRandom.Rand(0, population.Count);
+                if(population[j].healthCondition == HealthCondition.HEALTHY && population[j].inoculated == false)
                 {
-                    population[i].setHealthStatus(true, HealthCondition.INFECTED, false, false);
+                    population[j].setHealthStatus(true, HealthCondition.INFECTED, false, false);
                 }
             }
         }

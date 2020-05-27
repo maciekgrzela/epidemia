@@ -22,6 +22,31 @@ namespace Epidemia
         public List<Human> people;
         public List<Thread> populationThreads = new List<Thread>();
 
+        private static bool stopped;
+        private static readonly object accessLock = new object();
+
+
+        public static bool Stopped
+        {
+            get
+            {
+                bool returned = false;
+                lock (accessLock)
+                {
+                    returned = stopped;
+                }
+                return returned;
+            }
+            set
+            {
+                lock (accessLock)
+                {
+                    stopped = value;
+                }
+            }
+        }
+
+
         public Epidemia()
         {
             people = new List<Human>(Epidemia.population);

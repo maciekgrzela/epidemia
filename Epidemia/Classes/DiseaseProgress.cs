@@ -22,196 +22,184 @@ namespace Epidemia.Classes
 
         public void disease()
         {
-            while (true)
+            bool disease = true;
+            while (disease)
             {
-                int infectOtherCount = 0;
-                int newVaccinesAreReady=0;
-                int newTestsAreReady=0;
-                Hospital hospital = Hospital.Instance;
-                Virus virus = Virus.Instance;
-                Console.WriteLine("Empidemia sie rozwija");
-                Console.WriteLine("Stan zasobow: Vaccines:{0}, Tests:{1}", hospital.Vaccines.Count, hospital.Tests.Count);
-
-                if(newVaccinesAreReady<=0)
+                if (Epidemia.Stopped == true)
                 {
-                    hospital.orderVaccines(this.vaccinesSuply);
-                    Console.WriteLine("Dokonano zakupu szczepionek");
-                }
-
-                if(newTestsAreReady<=0)
+                    disease = false;
+                }else
                 {
-                    hospital.orderTests(this.testsSupply);
-                    Console.WriteLine("Dokonano zakupu testów");
-                }
-                // szpital musi czekać aż szczepionki i testy zostaną wyprodukowane
+                    int infectOtherCount = 0;
+                    int newVaccinesAreReady = 0;
+                    int newTestsAreReady = 0;
+                    Hospital hospital = Hospital.Instance;
+                    Virus virus = Virus.Instance;
 
-                foreach(var human in people)
-                {
-                    switch (human.healthCondition)
+                    if (newVaccinesAreReady <= 0)
                     {
-                        case HealthCondition.HEALTHY:
-                            if (human.inoculated == false && StaticRandom.Rand() < 0.3f)
-                            {
-                                Console.WriteLine("Pacjent {0} sie zaraził", human.identifier);
-                                human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
-                                Epidemia.Form.Invoke(new Action(() =>
-                                {
-                                    if(human.inoculated == false)
-                                    {
-                                        Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
-                                    }
-                                }));
-                            }
-                            break;
-                        case HealthCondition.INFECTED:
-                            Console.WriteLine("Wartość infectionTime: {0}", human.InfectionTime);
-                            if(human.InfectionTime <= 0)
-                            {
-                                human.recoverTimes();
-
-                                double recoveryProb = StaticRandom.Rand();
-                                if(recoveryProb<0.15f){
-                                    human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
-                                    Epidemia.Form.Invoke(new Action(() => {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
-                                    }));
-                                }
-                                else {
-                                Console.WriteLine("Pacjent {0} zachorował", human.identifier);
-                                human.setHealthStatus(true, HealthCondition.ILL, false, false);
-                                Epidemia.Form.Invoke(new Action(() =>
-                                {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.sick;
-                                }));
-                                }
-                            }
-                            else
-                            {
-                                double infectPropb = StaticRandom.Rand();
-                                if(human.tested==false){
-                                    if (infectPropb < 0.3f)
-                                    {
-                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                        infectOtherCount++;
-                                    }
-                                } else {
-                                    if (infectPropb < 0.15f)
-                                    {
-                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                        infectOtherCount++;
-                                    }
-                                    //jeśli chory został przetestowany jest świadomy swojego zakażenia, prawdopodobieństwo zakażenia innych spada o połowę
-                                }
-                                
-                            }
-                            break;
-                        case HealthCondition.ILL:
-                            if(human.IllnessTime <= 0)
-                            {
-                                human.recoverTimes();
-                                double recoveryProb = StaticRandom.Rand();
-                                if(recoveryProb<0.1f){
-                                    human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
-                                    Epidemia.Form.Invoke(new Action(() => {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
-                                    }));
-                                }
-                                else {
-                                Console.WriteLine("Pacjent {0} potrzebuje respiratora", human.identifier);
-                                human.setHealthStatus(true, HealthCondition.TERMINALLY_ILL, human.tested, false);
-                                Epidemia.Form.Invoke(new Action(() =>
-                                {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
-                                }));
-                                }
-                            }
-                            else
-                            {
-                                double infectPropb = StaticRandom.Rand();
-                                if(human.tested==false){
-                                    Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                    infectOtherCount++;
-                                } else{
-                                    if (infectPropb < 0.5f)
-                                    {
-                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                        infectOtherCount++;
-                                    }
-                                }
-                                 //jeśli chory został przetestowany jest świadomy swojej choroby, prawdopodobieństwo zakażenia innych spada o połowę
-                            }
-                            break;
-                        case HealthCondition.TERMINALLY_ILL:
-                            if(human.TerminalIllnessTime <= 0)
-                            {
-                                human.recoverTimes();
-                                Console.WriteLine("Pacjent {0} umarł na śmierć", human.identifier);
-                                human.setHealthStatus(true, HealthCondition.DEAD, human.tested, false);
-                                Epidemia.Form.Invoke(new Action(() =>
-                                {
-                                    Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.coffin;
-                                }));
-                            }
-                            else
-                            {
-                                double infectPropb = StaticRandom.Rand();
-                                if(human.tested==false){
-                                    Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                    infectOtherCount++;
-                                } else{
-                                    if (infectPropb < 0.5f)
-                                    {
-                                        Console.WriteLine("Pacjent {0} zaraża innych", human.identifier);
-                                        infectOtherCount++;
-                                    }
-                                }
-                                 //jeśli chory został przetestowany jest świadomy swojej choroby, prawdopodobieństwo zakażenia innych spada o połowę
-                            }
-                            break;
-                        case HealthCondition.DEAD:
-                            break;
+                        hospital.orderVaccines(this.vaccinesSuply);
                     }
+
+                    if (newTestsAreReady <= 0)
+                    {
+                        hospital.orderTests(this.testsSupply);
+                    }
+
+                    foreach (var human in people)
+                    {
+                        switch (human.healthCondition)
+                        {
+                            case HealthCondition.HEALTHY:
+                                if (human.inoculated == false && StaticRandom.Rand() < 0.3f)
+                                {
+                                    human.setHealthStatus(true, HealthCondition.INFECTED, false, false);
+                                    Epidemia.Form.Invoke(new Action(() =>
+                                    {
+                                        if (human.inoculated == false)
+                                        {
+                                            Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
+                                        }
+                                    }));
+                                }
+                                break;
+                            case HealthCondition.INFECTED:
+                                if (human.InfectionTime <= 0)
+                                {
+                                    human.recoverTimes();
+
+                                    double recoveryProb = StaticRandom.Rand();
+                                    if (recoveryProb < 0.15f)
+                                    {
+                                        human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
+                                        Epidemia.Form.Invoke(new Action(() => {
+                                            Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
+                                        }));
+                                    }
+                                    else
+                                    {
+                                        human.setHealthStatus(true, HealthCondition.ILL, false, false);
+                                        Epidemia.Form.Invoke(new Action(() =>
+                                        {
+                                            Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.sick;
+                                        }));
+                                    }
+                                }
+                                else
+                                {
+                                    double infectPropb = StaticRandom.Rand();
+                                    if (human.tested == false)
+                                    {
+                                        if (infectPropb < 0.3f)
+                                        {
+                                            infectOtherCount++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (infectPropb < 0.15f)
+                                        {
+                                            infectOtherCount++;
+                                        }
+                                    }
+
+                                }
+                                break;
+                            case HealthCondition.ILL:
+                                if (human.IllnessTime <= 0)
+                                {
+                                    human.recoverTimes();
+                                    double recoveryProb = StaticRandom.Rand();
+                                    if (recoveryProb < 0.1f)
+                                    {
+                                        human.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
+                                        Epidemia.Form.Invoke(new Action(() => {
+                                            Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
+                                        }));
+                                    }
+                                    else
+                                    {
+                                        human.setHealthStatus(true, HealthCondition.TERMINALLY_ILL, human.tested, false);
+                                        Epidemia.Form.Invoke(new Action(() =>
+                                        {
+                                            Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
+                                        }));
+                                    }
+                                }
+                                else
+                                {
+                                    double infectPropb = StaticRandom.Rand();
+                                    if (human.tested == false)
+                                    {
+                                        infectOtherCount++;
+                                    }
+                                    else
+                                    {
+                                        if (infectPropb < 0.5f)
+                                        {
+                                            infectOtherCount++;
+                                        }
+                                    }
+                                }
+                                break;
+                            case HealthCondition.TERMINALLY_ILL:
+                                if (human.TerminalIllnessTime <= 0)
+                                {
+                                    human.recoverTimes();
+                                    human.setHealthStatus(true, HealthCondition.DEAD, human.tested, false);
+                                    Epidemia.Form.Invoke(new Action(() =>
+                                    {
+                                        Epidemia.Form.populationTable.Controls.Find(human.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.coffin;
+                                    }));
+                                }
+                                else
+                                {
+                                    double infectPropb = StaticRandom.Rand();
+                                    if (human.tested == false)
+                                    {
+                                        infectOtherCount++;
+                                    }
+                                    else
+                                    {
+                                        if (infectPropb < 0.5f)
+                                        {
+                                            infectOtherCount++;
+                                        }
+                                    }
+                                }
+                                break;
+                            case HealthCondition.DEAD:
+                                break;
+                        }
+                    }
+
+                    virus.infect(ref people, infectOtherCount);
+
+                    if (virus.IsMutable)
+                    {
+                        virus.mutate(ref people);
+                    }
+
+
+                    infectOtherCount = 0;
+                    if (newVaccinesAreReady > 0)
+                    {
+                        newVaccinesAreReady--;
+                    }
+                    else
+                    {
+                        newVaccinesAreReady = 10;
+                    }
+                    if (newTestsAreReady > 0)
+                    {
+                        newTestsAreReady--;
+                    }
+                    else
+                    {
+                        newTestsAreReady = 5;
+                    }
+                    Thread.Sleep(2000);
                 }
-
-                virus.infect(ref people);
-
-                /**for (int i = 0; i < infectOtherCount; i++)
-                {
-                    
-                }**/
-
-                if (virus.IsMutable)
-                {
-                    virus.mutate(ref people);
-                }
-
-
-                // Bed.cs - nic sie nie dzieje - checked
-                // Human.cs - HEALTHY - other - może zostać zainfekowany - checked
-                // Human.cs - HEALTHY - tested - może zostać zainfekowany -checked
-                // Human.cs - HEALTHY - inoculated - nic sie nie dzieje - checked
-                // Human.cs - INFECTED - może infekować innych - checked
-                // Human.cs - INFECTED - po infectionTime staje się chory - checked
-                // Human.cs - ILL - infekuje innych - checked
-                // Human.cs - ILL - po illnessTime staje się terminalnie chory - checked
-                // Human.cs - TERMINALLY_ILL - infekuje innych
-                // Human.cs - TERMINALLY_ILL - po terminalIllnessTime umiera - checked
-                // Hospital.cs - Vaccines - jeżeli się skończą kupujemy nowe - checked
-                // Hospital.cs - Tests - jeżeli się skończą kupujemy nowe - checked
-
-                // Virus.cs - z bardzo niewielkim prawdopodobieństwem może mutować
-                // wszyscy pacjenci posiadają wtedy inoculated=false
-                if(newVaccinesAreReady>0){
-                    newVaccinesAreReady--;
-                } else{
-                    newVaccinesAreReady=10;
-                }
-                if(newTestsAreReady>0){
-                    newTestsAreReady--;
-                } else{
-                    newTestsAreReady=5;
-                }
-                Thread.Sleep(2000);
             }
         }
     }

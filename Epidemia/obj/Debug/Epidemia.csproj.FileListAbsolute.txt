@@ -35,3 +35,12 @@ C:\Users\Maciek\Desktop\so2epidemia\Epidemia\obj\Debug\Epidemia.Properties.Resou
 C:\Users\Maciek\Desktop\so2epidemia\Epidemia\obj\Debug\Epidemia.csproj.GenerateResource.cache
 C:\Users\Maciek\Desktop\so2epidemia\Epidemia\obj\Debug\Epidemia.exe
 C:\Users\Maciek\Desktop\so2epidemia\Epidemia\obj\Debug\Epidemia.pdb
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\bin\Debug\Epidemia.exe.config
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\bin\Debug\Epidemia.exe
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\bin\Debug\Epidemia.pdb
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\obj\Debug\Epidemia.csprojAssemblyReference.cache
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\obj\Debug\Epidemia.Window.resources
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\obj\Debug\Epidemia.Properties.Resources.resources
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\obj\Debug\Epidemia.csproj.GenerateResource.cache
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\obj\Debug\Epidemia.exe
+C:\Users\Maciek\Desktop\Epidemia_2705\Epidemia\obj\Debug\Epidemia.pdb

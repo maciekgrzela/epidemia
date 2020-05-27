@@ -184,197 +184,213 @@ namespace Epidemia.Classes
             bool isAlive = true;
             while (isAlive)
             {
-                switch (this.healthCondition)
+                if(Epidemia.Stopped == true)
                 {
-                    case HealthCondition.HEALTHY:
-                        if (this.tested == true)
-                        {
-                            if (this.inoculated == false)
+                    isAlive = false;
+                }else
+                {
+                    switch (this.healthCondition)
+                    {
+                        case HealthCondition.HEALTHY:
+                            if (this.tested == true)
                             {
-                                if(Monitor.TryEnter(allowToInoculate, new TimeSpan(0,0,1)))
+                                if (this.inoculated == false)
                                 {
-                                    try
+                                    if (Monitor.TryEnter(allowToInoculate, new TimeSpan(0, 0, 1)))
                                     {
-                                        this.inoculate();
-                                    }finally
-                                    {
-                                        Monitor.Exit(allowToInoculate);
+                                        try
+                                        {
+                                            this.inoculate();
+                                        }
+                                        finally
+                                        {
+                                            Monitor.Exit(allowToInoculate);
+                                        }
                                     }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Pacjent {0} jest zaszczepiony", this.identifier);
+                                    Epidemia.Form.Invoke(new Action(() =>
+                                    {
+                                        Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
+                                    }));
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("Pacjent {0} jest zaszczepiony", this.identifier);
-                                Epidemia.Form.Invoke(new Action(() =>
+                                if (Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
                                 {
+                                    try
+                                    {
+                                        this.makeTest();
+                                    }
+                                    finally
+                                    {
+                                        Monitor.Exit(allowToMakeTest);
+                                    }
+                                }
+                            }
+                            // może zrobić test - checked
+                            // jeżeli jego test okaże się pozytywny, może wziąć szczepionkę - checked
+                            // może się stać zainfekowany (za sprawą wątku postępu choroby) - checked
+                            break;
+                        case HealthCondition.INFECTED:
+                            this.InfectionTime--;
+                            Console.WriteLine("Pacjent {0} jest zainfekowany", this.identifier);
+                            Epidemia.Form.Invoke(new Action(() => {
+                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
+                            }));
+                            if (this.tested == false)
+                            {
+                                if (Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
+                                {
+                                    try
+                                    {
+                                        this.makeTest();
+                                    }
+                                    finally
+                                    {
+                                        Monitor.Exit(allowToMakeTest);
+                                    }
+                                }
+                            }
+                            // może zainfekować innych (za sprawą wątku postępu choroby) - checked
+                            // może stać się chory (za sprawą wątku postępu choroby) - checked
+                            break;
+                        case HealthCondition.ILL:
+                            this.IllnessTime--;
+                            Epidemia.Form.Invoke(new Action(() => {
+                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.sick;
+                            }));
+                            if (this.tested == false)
+                            {
+                                if (Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
+                                {
+                                    try
+                                    {
+                                        this.makeTest();
+                                    }
+                                    finally
+                                    {
+                                        Monitor.Exit(allowToMakeTest);
+                                    }
+                                }
+                            }
+                            Guid bedIdentifier = Guid.Empty;
+                            if (Monitor.TryEnter(allowToFindBed, new TimeSpan(0, 0, 1)))
+                            {
+                                try
+                                {
+                                    Hospital hospital2 = Hospital.Instance;
+                                    Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
+                                    foreach (var bed in hospital2.Beds)
+                                    {
+                                        if (!bed.isOccupied && !bed.hasRespirator)
+                                        {
+                                            bed.isOccupied = true;
+                                            bedIdentifier = bed.identifier;
+                                            Epidemia.Form.Invoke(new Action(() => {
+                                                Epidemia.Form.bedsTable.Controls.Find(bed.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._041_hospital_bed_red;
+                                            }));
+                                            break;
+                                        }
+                                    }
+                                }
+                                finally
+                                {
+                                    Monitor.Exit(allowToFindBed);
+                                }
+                            }
+
+                            if (bedIdentifier != Guid.Empty)
+                            {
+                                Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier);
+                                Thread.Sleep((12 - this.illnessTime) * 350); //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
+                                this.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
+                                Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier).isOccupied = false;
+                                Epidemia.Form.Invoke(new Action(() => {
+                                    Epidemia.Form.bedsTable.Controls.Find(bedIdentifier.ToString(), true)[0].BackgroundImage = Properties.Resources._041_hospital_bed1;
                                     Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
                                 }));
                             }
-                        }
-                        else
-                        {
-                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
-                            {
-                                try
-                                {
-                                    this.makeTest();
-                                }finally
-                                {
-                                    Monitor.Exit(allowToMakeTest);
-                                }
-                            }
-                        }
-                        // może zrobić test - checked
-                        // jeżeli jego test okaże się pozytywny, może wziąć szczepionkę - checked
-                        // może się stać zainfekowany (za sprawą wątku postępu choroby) - checked
-                        break;
-                    case HealthCondition.INFECTED:
-                        this.InfectionTime--;
-                        Console.WriteLine("Pacjent {0} jest zainfekowany", this.identifier);
-                        Epidemia.Form.Invoke(new Action(() => {
-                            Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._003_difficulty_breathing;
-                        }));
-                        if(this.tested==false){
-                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
-                            {
-                                try
-                                {
-                                    this.makeTest();
-                                }finally
-                                {
-                                    Monitor.Exit(allowToMakeTest);
-                                }
-                            }
-                        }
-                        // może zainfekować innych (za sprawą wątku postępu choroby) - checked
-                        // może stać się chory (za sprawą wątku postępu choroby) - checked
-                        break;
-                    case HealthCondition.ILL:
-                        this.IllnessTime--;
-                        Epidemia.Form.Invoke(new Action(() => {
-                            Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.sick;
-                        }));
-                        if(this.tested==false){
-                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
-                            {
-                                try
-                                {
-                                    this.makeTest();
-                                }finally
-                                {
-                                    Monitor.Exit(allowToMakeTest);
-                                }
-                            }
-                        }
-                        Guid bedIdentifier = Guid.Empty;
-                        if(Monitor.TryEnter(allowToFindBed, new TimeSpan(0,0,1)))
-                        {
-                            try
-                            {
-                                Hospital hospital2 = Hospital.Instance;
-                                Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
-                                foreach (var bed in hospital2.Beds)
-                                {
-                                    if (!bed.isOccupied && !bed.hasRespirator)
-                                    {
-                                        bed.isOccupied = true;
-                                        bedIdentifier = bed.identifier;
-                                        Epidemia.Form.Invoke(new Action(() => {
-                                            Epidemia.Form.bedsTable.Controls.Find(bed.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._041_hospital_bed_red;
-                                        }));
-                                        break;
-                                    }
-                                }
-                            }finally
-                            {
-                                Monitor.Exit(allowToFindBed);
-                            }
-                        }
 
-                        if(bedIdentifier != Guid.Empty)
-                        {
-                            Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier);
-                            Thread.Sleep((12-this.illnessTime)*350); //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
-                            this.setHealthStatus(false, HealthCondition.HEALTHY, false, false);
-                            Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier).isOccupied = false;
+                            // infekuje innych (za sprawą wątku postępu choroby)
+                            // może iść do szpitala - checked
+                            // może stać się terminalnie chory (za sprawą wątku postępu choroby)
+                            break;
+                        case HealthCondition.TERMINALLY_ILL:
+                            this.TerminalIllnessTime--;
                             Epidemia.Form.Invoke(new Action(() => {
-                                Epidemia.Form.bedsTable.Controls.Find(bedIdentifier.ToString(), true)[0].BackgroundImage = Properties.Resources._041_hospital_bed1;
-                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
+                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
                             }));
-                        }
-
-                        // infekuje innych (za sprawą wątku postępu choroby)
-                        // może iść do szpitala - checked
-                        // może stać się terminalnie chory (za sprawą wątku postępu choroby)
-                        break;
-                    case HealthCondition.TERMINALLY_ILL:
-                        this.TerminalIllnessTime--;
-                        Epidemia.Form.Invoke(new Action(() => {
-                            Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources._034_fever;
-                        }));
-                        if(this.tested==false){
-                            if(Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
+                            if (this.tested == false)
                             {
-                                try
+                                if (Monitor.TryEnter(allowToMakeTest, new TimeSpan(0, 0, 1)))
                                 {
-                                    this.makeTest();
-                                }finally
-                                {
-                                    Monitor.Exit(allowToMakeTest);
-                                }
-                            }
-                        }
-                        Console.WriteLine("Pacjent {0} jest terminalnie chory", this.identifier);
-                        Guid bedIdentifier2 = Guid.Empty;
-                        if (Monitor.TryEnter(allowToFindBed, new TimeSpan(0, 0, 1)))
-                        {
-                            try
-                            {
-                                Hospital hospital2 = Hospital.Instance;
-                                Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
-                                foreach (var bed in hospital2.Beds)
-                                {
-                                    if (!bed.isOccupied && bed.hasRespirator)
+                                    try
                                     {
-                                        bed.isOccupied = true;
-                                        bedIdentifier2 = bed.identifier;
-                                        Epidemia.Form.Invoke(new Action(() => {
-                                            Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources.lungs_red;
-                                        }));
-                                        break;
+                                        this.makeTest();
+                                    }
+                                    finally
+                                    {
+                                        Monitor.Exit(allowToMakeTest);
                                     }
                                 }
                             }
-                            finally
+                            Console.WriteLine("Pacjent {0} jest terminalnie chory", this.identifier);
+                            Guid bedIdentifier2 = Guid.Empty;
+                            if (Monitor.TryEnter(allowToFindBed, new TimeSpan(0, 0, 1)))
                             {
-                                Monitor.Exit(allowToFindBed);
+                                try
+                                {
+                                    Hospital hospital2 = Hospital.Instance;
+                                    Console.WriteLine("Pacjent {0} szuka łóżka", this.identifier);
+                                    foreach (var bed in hospital2.Beds)
+                                    {
+                                        if (!bed.isOccupied && bed.hasRespirator)
+                                        {
+                                            bed.isOccupied = true;
+                                            bedIdentifier2 = bed.identifier;
+                                            Epidemia.Form.Invoke(new Action(() => {
+                                                Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources.lungs_red;
+                                            }));
+                                            break;
+                                        }
+                                    }
+                                }
+                                finally
+                                {
+                                    Monitor.Exit(allowToFindBed);
+                                }
                             }
-                        }
 
-                        if (bedIdentifier2 != Guid.Empty)
-                        {
-                            Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier2);
-                            Thread.Sleep((17-this.TerminalIllnessTime)*350);  //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
-                            this.setHealthStatus(false, HealthCondition.HEALTHY, this.tested, this.inoculated);
+                            if (bedIdentifier2 != Guid.Empty)
+                            {
+                                Console.WriteLine("Pacjent {0} zajmuje łóżko {1}", this.identifier, bedIdentifier2);
+                                Thread.Sleep((17 - this.TerminalIllnessTime) * 350);  //czas zdrowienia zależy od tego jak długo pacjent czekał na miejsce w szpitalu
+                                this.setHealthStatus(false, HealthCondition.HEALTHY, this.tested, this.inoculated);
+                                Epidemia.Form.Invoke(new Action(() => {
+                                    Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources._006_lungs;
+                                    Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
+                                }));
+                                Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier2).isOccupied = false;
+                            }
+                            // infekuje innych (za sprawą wątku postępu choroby)
+                            // może iść do szpitala - checked
+                            // może umrzeć (za sprawą wątku postępu choroby)
+                            break;
+                        case HealthCondition.DEAD:
+                            Console.WriteLine("Pacjent {0} umarł na śmierć", this.identifier);
                             Epidemia.Form.Invoke(new Action(() => {
-                                Epidemia.Form.bedsTable.Controls.Find(bedIdentifier2.ToString(), true)[0].BackgroundImage = Properties.Resources._006_lungs;
-                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.medical_mask;
+                                Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.coffin;
                             }));
-                            Hospital.Instance.Beds.Find(x => x.identifier == bedIdentifier2).isOccupied = false;
-                        }
-                        // infekuje innych (za sprawą wątku postępu choroby)
-                        // może iść do szpitala - checked
-                        // może umrzeć (za sprawą wątku postępu choroby)
-                        break;
-                    case HealthCondition.DEAD:
-                        Console.WriteLine("Pacjent {0} umarł na śmierć", this.identifier);
-                        Epidemia.Form.Invoke(new Action(() => {
-                            Epidemia.Form.populationTable.Controls.Find(this.identifier.ToString(), true)[0].BackgroundImage = Properties.Resources.coffin;
-                        }));
-                        isAlive = false;
-                        break;
+                            isAlive = false;
+                            break;
+                    }
+                    Thread.Sleep(StaticRandom.Rand(800, 1200));
                 }
-                Thread.Sleep(StaticRandom.Rand(800,1200));
+                
             }
         }
     }

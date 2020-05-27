@@ -58,6 +58,7 @@
             this.vaccinesTable = new System.Windows.Forms.TableLayoutPanel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
+            this.stopSimulationBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.hospitalPanel.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -72,6 +73,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel1.Controls.Add(this.stopSimulationBtn);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.respiratoramounttb);
             this.panel1.Controls.Add(this.label5);
@@ -447,6 +449,19 @@
             this.label9.TabIndex = 3;
             this.label9.Text = "Przychodnia - szczepienia";
             // 
+            // stopSimulationBtn
+            // 
+            this.stopSimulationBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopSimulationBtn.Font = new System.Drawing.Font("Candara", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.stopSimulationBtn.ForeColor = System.Drawing.Color.White;
+            this.stopSimulationBtn.Location = new System.Drawing.Point(15, 527);
+            this.stopSimulationBtn.Name = "stopSimulationBtn";
+            this.stopSimulationBtn.Size = new System.Drawing.Size(181, 70);
+            this.stopSimulationBtn.TabIndex = 13;
+            this.stopSimulationBtn.Text = "STOP";
+            this.stopSimulationBtn.UseVisualStyleBackColor = true;
+            this.stopSimulationBtn.Click += new System.EventHandler(this.stopSimulationBtn_Click);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -510,6 +525,7 @@
         public System.Windows.Forms.TableLayoutPanel bedsTable;
         public System.Windows.Forms.TableLayoutPanel populationTable;
         public System.Windows.Forms.TableLayoutPanel labTable;
+        private System.Windows.Forms.Button stopSimulationBtn;
     }
 }
 
